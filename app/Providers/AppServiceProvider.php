@@ -21,11 +21,19 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    // buat hosting pakai https
+    // public function boot(): void
+    // {
+    //     // URL::forceScheme('https');
+    //     Blade::componentNamespace('BladeUI\Heroicons\BladeHeroicons', 'heroicon');
+    
     public function boot(): void
     {
-        URL::forceScheme('https');
-        Blade::componentNamespace('BladeUI\Heroicons\BladeHeroicons', 'heroicon');
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
 
+        Blade::componentNamespace('BladeUI\Heroicons\BladeHeroicons', 'heroicon');
         try {
 
             if (Schema::hasTable('konfigurasi')) {
