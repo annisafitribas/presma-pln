@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Konfigurasi;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Schema; // <-- import Schema
+use Illuminate\Support\Facades\Schema; 
 use BladeUI\Heroicons\BladeHeroicons;
 use App\Models\Telat;
 use App\Models\Pengajuan;
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     // {
     //     // URL::forceScheme('https');
     //     Blade::componentNamespace('BladeUI\Heroicons\BladeHeroicons', 'heroicon');
-    
+
     public function boot(): void
     {
         if (app()->environment('production')) {
