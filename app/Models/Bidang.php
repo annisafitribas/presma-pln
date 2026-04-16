@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Bagian extends Model
+class Bidang extends Model
 {
     use HasFactory;
 
@@ -16,12 +16,12 @@ class Bagian extends Model
 
     public function userProfiles()
     {
-        return $this->hasMany(UserProfile::class, 'bagian_id');
+        return $this->hasMany(UserProfile::class, 'bidang_id');
     }
 
     public function pembimbingProfiles()
     {
-        return $this->hasMany(PembimbingProfile::class, 'bagian_id');
+        return $this->hasMany(PembimbingProfile::class, 'bidang_id');
     }
 
     public function isUsed(): bool
@@ -29,5 +29,4 @@ class Bagian extends Model
         return $this->userProfiles()->exists()
             || $this->pembimbingProfiles()->exists();
     }
-
 }

@@ -63,11 +63,11 @@
                                             @if ($role === 'admin')
                                                 <x-table-th>No HP</x-table-th>
                                             @elseif($role === 'pembimbing')
-                                                <x-table-th>Bagian</x-table-th>
+                                                <x-table-th>Bidang</x-table-th>
                                                 <x-table-th align="center">Jumlah Peserta</x-table-th>
                                             @elseif($role === 'user')
                                                 <x-table-th>Pendidikan</x-table-th>
-                                                <x-table-th>Bagian</x-table-th>
+                                                <x-table-th>Bidang</x-table-th>
                                                 <x-table-th>Status</x-table-th>
                                             @else
                                                 <x-table-th>Role</x-table-th>
@@ -107,7 +107,8 @@
                                             @endphp
 
                                             <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
-                                                <x-table-td align="center">{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</x-table-td>
+                                                <x-table-td
+                                                    align="center">{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</x-table-td>
                                                 <x-table-td>{{ $user->name }}</x-table-td>
                                                 <x-table-td>{{ $user->email }}</x-table-td>
 
@@ -115,14 +116,14 @@
                                                     <x-table-td>{{ $user->no_hp ?? '-' }}</x-table-td>
                                                 @elseif($role === 'pembimbing')
                                                     <x-table-td>
-                                                        {{ optional(optional($user->pembimbingProfile)->bagian)->nama ?? '-' }}
+                                                        {{ optional(optional($user->pembimbingProfile)->bidang)->nama ?? '-' }}
                                                     </x-table-td>
                                                     <x-table-td align="center">
                                                         {{ optional($user->pembimbingProfile)->usersDibimbing->count() ?? 0 }}
                                                     </x-table-td>
                                                 @elseif($role === 'user')
                                                     <x-table-td>{{ optional($user->profile)->pendidikan ?? '-' }}</x-table-td>
-                                                    <x-table-td>{{ optional(optional($user->profile)->bagian)->nama ?? '-' }}</x-table-td>
+                                                    <x-table-td>{{ optional(optional($user->profile)->bidang)->nama ?? '-' }}</x-table-td>
                                                     <x-table-td>
                                                         <span
                                                             class="font-semibold
@@ -278,7 +279,7 @@
                                         <p>No HP : {{ $user->no_hp ?? '-' }}</p>
                                     @elseif($role === 'pembimbing')
                                         <p>
-                                            {{ optional(optional($user->pembimbingProfile)->bagian)->nama ?? '-' }}
+                                            {{ optional(optional($user->pembimbingProfile)->bidang)->nama ?? '-' }}
                                         </p>
                                         <p>Jumlah Peserta :
                                             {{ optional($user->pembimbingProfile)->usersDibimbing->count() ?? 0 }}
@@ -287,8 +288,8 @@
                                         <p>
                                             {{ optional($user->profile)->pendidikan ?? '-' }}
                                         </p>
-                                        <p>Bagian :
-                                            {{ optional(optional($user->profile)->bagian)->nama ?? '-' }}
+                                        <p>Bidang :
+                                            {{ optional(optional($user->profile)->bidang)->nama ?? '-' }}
                                         </p>
                                     @else
                                         <p>Role : {{ ucfirst($user->role) }}</p>

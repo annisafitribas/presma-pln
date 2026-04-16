@@ -126,7 +126,7 @@
                                         @endif
                                     </div>
                                     <p class="text-xs text-gray-400">
-                                        {{ optional(optional($user->profile)->bagian)->nama ?? '-' }}
+                                        {{ optional(optional($user->profile)->bidang)->nama ?? '-' }}
                                     </p>
                                 </div>
 
@@ -185,7 +185,6 @@
                 <div class="flex justify-end mt-6 px-6">
                     {{ $users->onEachSide(1)->links() }}
                 </div>
-
             @else
                 <div class="text-center font-semibold py-10 flex flex-col items-center gap-2">
                     <x-heroicon-o-folder-minus class="w-12 h-12 text-[#CBD5E1]" />

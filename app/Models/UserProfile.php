@@ -12,7 +12,7 @@ class UserProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'bagian_id',
+        'bidang_id',
         'pembimbing_id',
         'nomor_induk',
         'tingkatan',
@@ -36,9 +36,9 @@ class UserProfile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bagian()
+    public function bidang()
     {
-        return $this->belongsTo(Bagian::class, 'bagian_id');
+        return $this->belongsTo(Bidang::class, 'bidang_id');
     }
 
     public function pembimbing()

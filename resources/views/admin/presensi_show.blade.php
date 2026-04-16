@@ -314,7 +314,7 @@
                                 </p>
                             </div>
 
-                            {{-- 🔴 BAGIAN INI SAJA YANG DIUBAH --}}
+                            {{-- 🔴 Bidang INI SAJA YANG DIUBAH --}}
 
                             <form method="POST" action="{{ route('admin.presensi.update', $p->id) }}"
                                 enctype="multipart/form-data" x-data="{ status: '{{ old('status', $p->status) }}' }" class="space-y-4">

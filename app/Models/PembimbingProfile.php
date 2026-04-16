@@ -11,7 +11,7 @@ class PembimbingProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'bagian_id',
+        'bidang_id',
         'nip',
         'jabatan',
     ];
@@ -21,9 +21,9 @@ class PembimbingProfile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bagian()
+    public function bidang()
     {
-        return $this->belongsTo(Bagian::class);
+        return $this->belongsTo(Bidang::class);
     }
 
     public function mentees()

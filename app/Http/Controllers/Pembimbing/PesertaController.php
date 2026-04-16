@@ -13,7 +13,7 @@ class PesertaController extends Controller
         $pembimbing = Auth::user();
 
         $peserta = User::with([
-            'profile.bagian',
+            'profile.bidang',
             'presensi'
         ])
             ->whereHas('profile.pembimbing.user', function ($q) use ($pembimbing) {

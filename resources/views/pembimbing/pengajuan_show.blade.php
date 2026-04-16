@@ -38,9 +38,9 @@
                     </div>
 
                     <div>
-                        <p class="text-gray-500 text-sm">Bagian</p>
+                        <p class="text-gray-500 text-sm">Bidang</p>
                         <p class="text-gray-800">
-                            {{ $pengajuan->user->profile?->bagian?->nama ?? '-' }}
+                            {{ $pengajuan->user->profile?->bidang?->nama ?? '-' }}
                         </p>
                     </div>
 
@@ -87,7 +87,8 @@
 
                         <div class="text-right">
                             <p class="text-gray-500 text-xs">Status</p>
-                            <span class="text-sm font-semibold
+                            <span
+                                class="text-sm font-semibold
                                 @class([
                                     'text-yellow-700' => $pengajuan->status === 'pending',
                                     'text-green-700' => $pengajuan->status === 'approved',

@@ -14,8 +14,8 @@ return new class extends Migration
             // FK ke users
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-            // FK ke bagian dan pembimbing (nullable)
-            $table->foreignId('bagian_id')->nullable()->constrained('bagians')->onDelete('set null');
+            // FK ke Bidang dan pembimbing (nullable)
+            $table->foreignId('bidang_id')->nullable()->constrained('bidangs')->onDelete('set null');
             $table->foreignId('pembimbing_id')->nullable()->constrained('pembimbing_profiles')->onDelete('set null');
 
             // Field tambahan

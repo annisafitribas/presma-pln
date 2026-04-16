@@ -163,9 +163,9 @@
                         </div>
 
                         <div>
-                            <x-input-label value="Bagian*" />
-                            <x-select-box name="pembimbing[bagian_id]" :value="old('pembimbing.bagian_id', $user->pembimbingProfile->bagian_id ?? '')" :options="$bagians->pluck('nama', 'id')->toArray()"
-                                placeholder="Pilih Bagian" class="mt-1" />
+                            <x-input-label value="Bidang*" />
+                            <x-select-box name="pembimbing[bidang_id]" :value="old('pembimbing.bidang_id', $user->pembimbingProfile->bidang_id ?? '')" :options="$bidangs->pluck('nama', 'id')->toArray()"
+                                placeholder="Pilih Bidang" class="mt-1" />
                         </div>
                     </div>
                 </div>
@@ -217,9 +217,9 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <x-input-label value="Bagian Magang*" />
-                            <x-select-box name="user[bagian_id]" :value="old('user.bagian_id', $user->profile->bagian_id ?? '')" :options="$bagians->pluck('nama', 'id')->toArray()"
-                                placeholder="Pilih Bagian" class="mt-1" />
+                            <x-input-label value="Bidang Magang*" />
+                            <x-select-box name="user[bidang_id]" :value="old('user.bidang_id', $user->profile->bidang_id ?? '')" :options="$bidangs->pluck('nama', 'id')->toArray()"
+                                placeholder="Pilih Bidang" class="mt-1" />
                         </div>
 
                         <div>

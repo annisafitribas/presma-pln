@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Pembimbing;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bagian;
+use App\Models\Bidang;
 use App\Models\PembimbingProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,7 +23,7 @@ class ProfileController extends Controller
 
         $user->load([
             'pembimbingProfile' => function ($q) {
-                $q->with('bagian');
+                $q->with('bidang');
             }
         ]);
 
@@ -39,13 +39,13 @@ class ProfileController extends Controller
 
         $user->load([
             'pembimbingProfile' => function ($q) {
-                $q->with('bagian');
+                $q->with('bidang');
             }
         ]);
 
-        $bagians = Bagian::orderBy('nama')->get();
+        $bidangs = Bidang::orderBy('nama')->get();
 
-        return view('pembimbing.profile_edit', compact('user', 'bagians'));
+        return view('pembimbing.profile_edit', compact('user', 'bidangs'));
     }
 
     /*
@@ -68,7 +68,7 @@ class ProfileController extends Controller
             // DATA PEMBIMBING
             'nip'       => ['nullable', 'string', 'max:50'],
             'jabatan'   => ['required', 'string', 'max:100'],
-            'bagian_id' => ['required', 'exists:bagians,id'],
+            'bidang_id' => ['required', 'exists:bidangs,id'],
         ]);
 
         if ($request->hasFile('foto')) {
@@ -118,7 +118,7 @@ class ProfileController extends Controller
             [
                 'nip'       => $validated['nip'],
                 'jabatan'   => $validated['jabatan'],
-                'bagian_id' => $validated['bagian_id'],
+                'bidang_id' => $validated['bidang_id'],
             ]
         );
 

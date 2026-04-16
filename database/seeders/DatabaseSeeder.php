@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
         // Jalankan seeder lainnya
         $this->call([
-            // BagianSeeder::class,
+            // bidangseeder::class,
             UserSeeder::class,
             // konfigurasieeder::class,
         ]);

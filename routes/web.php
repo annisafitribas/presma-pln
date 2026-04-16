@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 // Admin
 use App\Http\Controllers\Admin\KonfigurasiController as AdminKonfigurasiController;
 use App\Http\Controllers\Admin\AkunController;
-use App\Http\Controllers\Admin\BagianController;
+use App\Http\Controllers\Admin\BidangController;
 use App\Http\Controllers\Admin\PengajuanController as AdminPengajuanController;
 use App\Http\Controllers\Admin\PresensiController as AdminPresensiController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -108,7 +108,7 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::resource('konfigurasi', AdminKonfigurasiController::class);
         Route::resource('pengguna', AkunController::class);
-        Route::resource('bagian', BagianController::class);
+        Route::resource('bidang', BidangController::class);
 
         Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('pengajuan.index');
 
@@ -129,7 +129,6 @@ Route::middleware(['auth', 'role:admin'])
         // Route::patch('/telat/{telat}/approve', [AdminTelatController::class, 'approve'])->name('telat.approve');
         // Route::patch('/telat/{telat}/reject', [AdminTelatController::class, 'reject'])->name('telat.reject');
         Route::patch('/telat/{telat}/update-status', [AdminTelatController::class, 'updateStatus'])->name('telat.updateStatus');
-        
     });
 
 // ROLE: USER

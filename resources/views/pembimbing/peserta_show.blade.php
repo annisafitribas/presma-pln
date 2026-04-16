@@ -43,7 +43,7 @@
                 </h4>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                    <x-show-item label="Bagian" :value="$user->profile?->bagian?->nama ?? '-'" />
+                    <x-show-item label="Bidang" :value="$user->profile?->bidang?->nama ?? '-'" />
                     <x-show-item label="Status Magang" :value="$user->profile?->status_magang ?? '-'" />
                     <x-show-item 
                         label="Jenis Kelamin" 

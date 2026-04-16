@@ -96,7 +96,7 @@
 
                     <x-show-item label="Jabatan" :value="$user->pembimbingProfile->jabatan ?? '-'" />
 
-                    <x-show-item label="Bagian" :value="optional($user->pembimbingProfile->bagian)->nama ?? '-'" />
+                    <x-show-item label="Bidang" :value="optional($user->pembimbingProfile->bidang)->nama ?? '-'" />
 
                     <x-show-item label="Jumlah Peserta Dibimbing" :value="$user->pembimbingProfile->usersDibimbing()->count() . ' peserta'" />
 

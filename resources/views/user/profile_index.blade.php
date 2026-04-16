@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                    <x-show-item label="Bagian" :value="optional($user->profile->bagian)->nama ?? '-'" />
+                    <x-show-item label="Bidang" :value="optional($user->profile->bidang)->nama ?? '-'" />
                     <x-show-item label="Pembimbing" :value="optional($user->profile->pembimbing->user)->name ?? '-'" />
                     <x-show-item label="Tanggal Masuk" :value="optional($user->profile->tgl_masuk)->format('d-m-Y') ?? '-'" />
                     <x-show-item label="Tanggal Keluar" :value="optional($user->profile->tgl_keluar)->format('d-m-Y') ?? '-'" />
@@ -127,7 +127,7 @@
                 Ubah Password
             </x-user-button>
         </x-card>
-        
+
         {{-- MODAL PASSWORD --}}
         <x-modal name="change-password" :show="session('open_password_modal')" maxWidth="md" focusable>
 

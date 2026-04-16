@@ -191,7 +191,7 @@
                 <td class="label">Bidang Magang</td>
                 <td class="colon">:</td>
                 <td class="value">
-                    {{ optional($user->profile->bagian)->nama ?? ' ' }}
+                    {{ optional($user->profile->bidang)->nama ?? ' ' }}
                 </td>
             </tr>
         </table>
@@ -295,4 +295,5 @@
         Dicetak dari Sistem Presensi Magang (PRESMA)
     </div>
 </body>
+
 </html>

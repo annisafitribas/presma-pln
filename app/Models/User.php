@@ -12,15 +12,15 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'role',
-    'foto',
-    'gender',
-    'tgl_lahir',
-    'alamat',
-    'no_hp'
+        'name',
+        'email',
+        'password',
+        'role',
+        'foto',
+        'gender',
+        'tgl_lahir',
+        'alamat',
+        'no_hp'
     ];
 
     protected $hidden = ['password', 'remember_token'];
@@ -38,9 +38,9 @@ class User extends Authenticatable
         return $this->hasMany(Presensi::class);
     }
 
-    public function bagian()
+    public function bidang()
     {
-        return $this->belongsTo(Bagian::class, 'bagian_id');
+        return $this->belongsTo(Bidang::class, 'bidang_id');
     }
 
     // HELPERS

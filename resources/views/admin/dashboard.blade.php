@@ -41,9 +41,9 @@
                 </div>
 
                 <div class="flex-1 bg-white border rounded-2xl py-6 text-center shadow-sm">
-                    <p class="text-xs text-gray-500">Bagian</p>
+                    <p class="text-xs text-gray-500">Bidang</p>
                     <p class="text-2xl font-bold text-gray-900 mt-2">
-                        {{ $totalBagian }}
+                        {{ $totalBidang }}
                     </p>
                 </div>
 
@@ -76,9 +76,9 @@
                     </div>
 
                     <div class="flex-1 py-4">
-                        <p class="text-xs text-gray-500">Bagian</p>
+                        <p class="text-xs text-gray-500">Bidang</p>
                         <p class="text-lg font-bold mt-1">
-                            {{ $totalBagian }}
+                            {{ $totalBidang }}
                         </p>
                     </div>
 
@@ -116,7 +116,7 @@
                                     No
                                 </x-table-th>
                                 <x-table-th>Nama</x-table-th>
-                                <x-table-th>Bagian</x-table-th>
+                                <x-table-th>Bidang</x-table-th>
                                 <x-table-th class="hidden sm:table-cell">
                                     Pembimbing
                                 </x-table-th>
@@ -136,7 +136,7 @@
                                     </x-table-td>
 
                                     <x-table-td>
-                                        {{ optional(optional($user->profile)->bagian)->nama ?? '-' }}
+                                        {{ optional(optional($user->profile)->bidang)->nama ?? '-' }}
                                     </x-table-td>
 
                                     <x-table-td class="hidden sm:table-cell">

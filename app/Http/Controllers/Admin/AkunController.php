@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Bagian;
+use App\Models\Bidang;
 use App\Models\UserProfile;
 use App\Models\PembimbingProfile;
 use Illuminate\Http\Request;
@@ -21,9 +21,9 @@ class AkunController extends Controller
         $role = $request->query('role', 'all');
 
         $query = User::with([
-            'pembimbingProfile.bagian',
+            'pembimbingProfile.bidang',
             'pembimbingProfile.usersDibimbing',
-            'profile.bagian'
+            'profile.bidang'
         ]);
 
         if ($role !== 'all') {
@@ -68,14 +68,14 @@ class AkunController extends Controller
 
     public function create()
     {
-        $bagians = Bagian::all();
+        $bidangs = Bidang::all();
 
         $pembimbings = PembimbingProfile::with('user')
             ->whereHas('user', fn($q) => $q->where('role', 'pembimbing'))
             ->get()
             ->mapWithKeys(fn($p) => [$p->id => $p->user->name]);
 
-        return view('admin.pengguna_create', compact('bagians', 'pembimbings'));
+        return view('admin.pengguna_create', compact('bidangs', 'pembimbings'));
     }
 
     public function store(Request $request)
@@ -100,7 +100,7 @@ class AkunController extends Controller
             $rules += [
                 'pembimbing.nip' => ['nullable', 'string', 'max:10'],
                 'pembimbing.jabatan' => ['required', 'string', 'max:100'],
-                'pembimbing.bagian_id' => ['required', 'exists:bagians,id'],
+                'pembimbing.bidang_id' => ['required', 'exists:bidangs,id'],
             ];
         }
 
@@ -112,7 +112,7 @@ class AkunController extends Controller
                 'user.pendidikan' => ['required', 'string', 'max:100'],
                 'user.kelas' => ['required', 'string', 'max:50'],
                 'user.jurusan' => ['required', 'string', 'max:100'],
-                'user.bagian_id' => ['required', 'exists:bagians,id'],
+                'user.bidang_id' => ['required', 'exists:bidangs,id'],
                 'user.pembimbing_id' => ['required', 'exists:pembimbing_profiles,id'],
                 'user.tgl_masuk' => ['required', 'date'],
                 'user.tgl_keluar' => ['required', 'date', 'after_or_equal:user.tgl_masuk'],
@@ -161,7 +161,7 @@ class AkunController extends Controller
                 'user_id' => $user->id,
                 'nip' => data_get($validated, 'pembimbing.nip'),
                 'jabatan' => data_get($validated, 'pembimbing.jabatan'),
-                'bagian_id' => data_get($validated, 'pembimbing.bagian_id'),
+                'bidang_id' => data_get($validated, 'pembimbing.bidang_id'),
             ]);
         }
 
@@ -174,7 +174,7 @@ class AkunController extends Controller
                 'pendidikan' => data_get($validated, 'user.pendidikan'),
                 'kelas' => data_get($validated, 'user.kelas'),
                 'jurusan' => data_get($validated, 'user.jurusan'),
-                'bagian_id' => data_get($validated, 'user.bagian_id'),
+                'bidang_id' => data_get($validated, 'user.bidang_id'),
                 'pembimbing_id' => data_get($validated, 'user.pembimbing_id'),
                 'tgl_masuk' => data_get($validated, 'user.tgl_masuk'),
                 'tgl_keluar' => data_get($validated, 'user.tgl_keluar'),
@@ -189,13 +189,13 @@ class AkunController extends Controller
     public function edit($id)
     {
         $user = User::with([
-            'profile.bagian',
+            'profile.bidang',
             'profile.pembimbing.user',
-            'pembimbingProfile.bagian',
+            'pembimbingProfile.bidang',
             'pembimbingProfile.user',
         ])->findOrFail($id);
 
-        $bagians = Bagian::orderBy('nama')->get();
+        $bidangs = Bidang::orderBy('nama')->get();
 
         $pembimbings = PembimbingProfile::with('user')
             ->whereHas('user', fn($q) => $q->where('role', 'pembimbing'))
@@ -203,7 +203,7 @@ class AkunController extends Controller
             ->mapWithKeys(fn($p) => [$p->id => $p->user->name])
             ->toArray();
 
-        return view('admin.pengguna_edit', compact('user', 'bagians', 'pembimbings'));
+        return view('admin.pengguna_edit', compact('user', 'bidangs', 'pembimbings'));
     }
 
     public function update(Request $request, User $pengguna)
@@ -224,7 +224,7 @@ class AkunController extends Controller
             $rules += [
                 'pembimbing.nip' => ['required', 'string', 'max:50'],
                 'pembimbing.jabatan' => ['required', 'string', 'max:100'],
-                'pembimbing.bagian_id' => ['required', 'exists:bagians,id'],
+                'pembimbing.bidang_id' => ['required', 'exists:bidangs,id'],
             ];
         }
 
@@ -235,7 +235,7 @@ class AkunController extends Controller
                 'user.pendidikan' => ['required', 'string', 'max:100'],
                 'user.kelas' => ['required', 'string', 'max:50'],
                 'user.jurusan' => ['required', 'string', 'max:100'],
-                'user.bagian_id' => ['required', 'exists:bagians,id'],
+                'user.bidang_id' => ['required', 'exists:bidangs,id'],
                 'user.pembimbing_id' => ['required', 'exists:pembimbing_profiles,id'],
                 'user.tgl_masuk' => ['required', 'date'],
                 'user.tgl_keluar' => ['required', 'date', 'after_or_equal:user.tgl_masuk'],
@@ -287,7 +287,7 @@ class AkunController extends Controller
                 [
                     'nip' => data_get($validated, 'pembimbing.nip'),
                     'jabatan' => data_get($validated, 'pembimbing.jabatan'),
-                    'bagian_id' => data_get($validated, 'pembimbing.bagian_id'),
+                    'bidang_id' => data_get($validated, 'pembimbing.bidang_id'),
                 ]
             );
         }
@@ -301,7 +301,7 @@ class AkunController extends Controller
                     'pendidikan' => data_get($validated, 'user.pendidikan'),
                     'kelas' => data_get($validated, 'user.kelas'),
                     'jurusan' => data_get($validated, 'user.jurusan'),
-                    'bagian_id' => data_get($validated, 'user.bagian_id'),
+                    'bidang_id' => data_get($validated, 'user.bidang_id'),
                     'pembimbing_id' => data_get($validated, 'user.pembimbing_id'),
                     'tgl_masuk' => data_get($validated, 'user.tgl_masuk'),
                     'tgl_keluar' => data_get($validated, 'user.tgl_keluar'),
@@ -332,9 +332,9 @@ class AkunController extends Controller
     public function show($id)
     {
         $pengguna = User::with([
-            'profile.bagian',
+            'profile.bidang',
             'profile.pembimbing.user',
-            'pembimbingProfile.bagian'
+            'pembimbingProfile.bidang'
         ])->findOrFail($id);
 
         return view('admin.pengguna_show', compact('pengguna'));

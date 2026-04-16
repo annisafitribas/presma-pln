@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nip')->nullable();
             $table->string('jabatan')->nullable();
-            $table->foreignId('bagian_id')->nullable()->constrained('bagians')->onDelete('set null');
+            $table->foreignId('bidang_id')->nullable()->constrained('bidangs')->onDelete('set null');
             $table->timestamps();
         });
     }

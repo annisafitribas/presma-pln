@@ -3,86 +3,86 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bagian;
+use App\Models\Bidang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class BagianController extends Controller
+class BidangController extends Controller
 {
     public function index()
     {
-        $bagians = Bagian::orderByDesc('updated_at')
+        $bidangs = Bidang::orderByDesc('updated_at')
             ->paginate(10);
-        return view('admin.bagian', compact('bagians'));
+        return view('admin.bidang', compact('bidangs'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255|unique:bagians,nama',
-            'kepala' => 'required|string|max:255|unique:bagians,kepala',
+            'nama' => 'required|string|max:255|unique:bidangs,nama',
+            'kepala' => 'required|string|max:255|unique:bidangs,kepala',
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                ->route('admin.bagian.index')
+                ->route('admin.bidang.index')
                 ->withErrors($validator)
                 ->withInput()
-                ->with('open_modal', 'modal-create-bagian');
+                ->with('open_modal', 'modal-create-bidang');
         }
 
-        Bagian::create([
+        Bidang::create([
             'nama' => $request->nama,
             'kepala' => $request->kepala,
         ]);
 
         return redirect()
-            ->route('admin.bagian.index')
-            ->with('success', 'Data bagian baru berhasil ditambahkan');
+            ->route('admin.bidang.index')
+            ->with('success', 'Data Bidang baru berhasil ditambahkan');
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255|unique:bagians,nama,' . $id,
-            'kepala' => 'required|string|max:255|unique:bagians,kepala,' . $id,
+            'nama' => 'required|string|max:255|unique:bidangs,nama,' . $id,
+            'kepala' => 'required|string|max:255|unique:bidangs,kepala,' . $id,
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                ->route('admin.bagian.index')
+                ->route('admin.bidang.index')
                 ->withErrors($validator)
                 ->withInput()
-                ->with('open_modal', 'modal-edit-bagian-' . $id);
+                ->with('open_modal', 'modal-edit-bidang-' . $id);
         }
 
-        $bagian = Bagian::findOrFail($id);
+        $bidang = Bidang::findOrFail($id);
 
-        $bagian->update([
+        $bidang->update([
             'nama' => $request->nama,
             'kepala' => $request->kepala,
         ]);
 
         return redirect()
-            ->route('admin.bagian.index')
-            ->with('success', 'Data bagian "' . $bagian->nama . '" berhasil diperbarui');
+            ->route('admin.bidang.index')
+            ->with('success', 'Data Bidang "' . $bidang->nama . '" berhasil diperbarui');
     }
 
     public function destroy($id)
     {
-        $bagian = Bagian::findOrFail($id);
+        $bidang = Bidang::findOrFail($id);
 
-        if ($bagian->isUsed()) {
+        if ($bidang->isUsed()) {
             return redirect()
-                ->route('admin.bagian.index')
-                ->with('error', 'Bagian tidak dapat dihapus karena sudah digunakan');
+                ->route('admin.bidang.index')
+                ->with('error', 'Bidang tidak dapat dihapus karena sudah digunakan');
         }
-        $nama = $bagian->nama;
-        $bagian->delete();
+        $nama = $bidang->nama;
+        $bidang->delete();
 
         return redirect()
-            ->route('admin.bagian.index')
-            ->with('success', 'Data bagian "' . $nama . '" berhasil dihapus');
+            ->route('admin.bidang.index')
+            ->with('success', 'Data Bidang "' . $nama . '" berhasil dihapus');
     }
 }

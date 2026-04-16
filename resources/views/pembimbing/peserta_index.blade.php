@@ -23,7 +23,7 @@
                 <thead class="bg-gray-100 border-b">
                     <tr class="text-gray-600 text-sm">
                         <th class="px-4 py-3 text-left">Peserta</th>
-                        <th class="px-4 py-3 text-left">Bagian</th>
+                        <th class="px-4 py-3 text-left">Bidang</th>
                         <th class="px-4 py-3 text-center">Status</th>
                         <th class="px-4 py-3 text-center">Hadir</th>
                         <th class="px-4 py-3 text-center">Alpha</th>
@@ -55,7 +55,7 @@
                             </td>
 
                             <td class="px-4 py-3 text-left">
-                                {{ $user->profile?->bagian?->nama ?? '-' }}
+                                {{ $user->profile?->bidang?->nama ?? '-' }}
                             </td>
 
                             <td class="px-4 py-3 text-center">
@@ -119,9 +119,9 @@
                     <div class="grid grid-cols-2 gap-3 text-xs mb-3">
 
                         <div>
-                            <p class="text-gray-400 text-xs">Bagian</p>
+                            <p class="text-gray-400 text-xs">Bidang</p>
                             <p class="font-medium">
-                                {{ $user->profile?->bagian?->nama ?? '-' }}
+                                {{ $user->profile?->bidang?->nama ?? '-' }}
                             </p>
                         </div>
 
@@ -168,7 +168,7 @@
 
         <div class="flex justify-end mt-6">
             {{ $peserta->onEachSide(1)->links() }}
-            
+
         </div>
     </x-card>
 

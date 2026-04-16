@@ -152,14 +152,14 @@ return [
         'kantor_lng' => 'Longitude',
         'radius' => 'Radius Presensi',
 
-        // bagian
-        'nama'      => 'Nama bagian',
-        'kepala'    => 'Kepala bagian',
+        // Bidang
+        'nama'      => 'Nama bidang',
+        'kepala'    => 'Kepala bidang',
 
         // pembimbing
         'pembimbing.nip'       => 'NIP',
         'pembimbing.jabatan'   => 'Jabatan',
-        'pembimbing.bagian_id' => 'Bagian pembimbing',
+        'pembimbing.bidang_id' => 'Bidang pembimbing',
 
         // user magang
         'user.nomor_induk'   => 'Nomor induk',
@@ -167,7 +167,7 @@ return [
         'user.pendidikan'    => 'Asal pendidikan',
         'user.kelas'         => 'Kelas / Semester',
         'user.jurusan'       => 'Jurusan',
-        'user.bagian_id'     => 'Bagian magang',
+        'user.bidang_id'     => 'Bidang magang',
         'user.pembimbing_id' => 'Pembimbing',
         'user.tgl_masuk'     => 'Tanggal masuk',
         'user.tgl_keluar'    => 'Tanggal keluar',

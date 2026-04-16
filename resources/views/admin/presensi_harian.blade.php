@@ -42,7 +42,7 @@
                         <tr>
                             <x-table-th align="center" class="w-12">No</x-table-th>
                             <x-table-th>Nama</x-table-th>
-                            <x-table-th>Bagian</x-table-th>
+                            <x-table-th>Bidang</x-table-th>
                             <x-table-th>Pembimbing</x-table-th>
                             <x-table-th align="center">Masuk</x-table-th>
                             <x-table-th align="center">Pulang</x-table-th>
@@ -76,7 +76,7 @@
                                 </x-table-td>
 
                                 <x-table-td>
-                                    {{ optional(optional($user->profile)->bagian)->nama ?? '-' }}
+                                    {{ optional(optional($user->profile)->bidang)->nama ?? '-' }}
                                 </x-table-td>
 
                                 <x-table-td>
@@ -134,7 +134,7 @@
                                     {{ $user->name }}
                                 </p>
                                 <p class="text-xs text-gray-500">
-                                    {{ optional(optional($user->profile)->bagian)->nama ?? '-' }}
+                                    {{ optional(optional($user->profile)->bidang)->nama ?? '-' }}
                                 </p>
                             </div>
 

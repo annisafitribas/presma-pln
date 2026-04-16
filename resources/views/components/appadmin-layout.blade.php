@@ -94,7 +94,7 @@
                     $menu = [
                         ['Dashboard', 'admin.dashboard', 'heroicon-o-squares-2x2'],
                         ['Konfigurasi', 'admin.konfigurasi.index', 'heroicon-o-building-office'],
-                        ['Bagian', 'admin.bagian.index', 'heroicon-o-rectangle-stack'],
+                        ['bidang', 'admin.bidang.index', 'heroicon-o-rectangle-stack'],
                         ['Pengguna', 'admin.pengguna.index', 'heroicon-o-users'],
                         ['Presensi Harian', 'admin.presensi.harian', 'heroicon-o-calendar-days'],
                         ['Riwayat Presensi', 'admin.presensi.index', 'heroicon-o-archive-box'],

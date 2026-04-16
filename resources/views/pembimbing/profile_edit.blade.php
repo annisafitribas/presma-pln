@@ -142,14 +142,14 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Bagian*</label>
-                        <select name="bagian_id"
-                            class="mt-1 w-full rounded-lg px-3 py-2 border {{ $errors->has('bagian_id') ? 'border-red-500' : 'border-gray-300' }}">
-                            <option value="">-- Pilih Bagian --</option>
-                            @foreach ($bagians as $bagian)
-                                <option value="{{ $bagian->id }}"
-                                    {{ old('bagian_id', optional($user->pembimbingProfile)->bagian_id ?? '') == $bagian->id ? 'selected' : '' }}>
-                                    {{ $bagian->nama }}
+                        <label class="block text-sm font-medium text-gray-700">Bidang*</label>
+                        <select name="bidang_id"
+                            class="mt-1 w-full rounded-lg px-3 py-2 border {{ $errors->has('bidang_id') ? 'border-red-500' : 'border-gray-300' }}">
+                            <option value="">-- Pilih Bidang --</option>
+                            @foreach ($bidangs as $bidang)
+                                <option value="{{ $bidang->id }}"
+                                    {{ old('bidang_id', optional($user->pembimbingProfile)->bidang_id ?? '') == $bidang->id ? 'selected' : '' }}>
+                                    {{ $bidang->nama }}
                                 </option>
                             @endforeach
                         </select>

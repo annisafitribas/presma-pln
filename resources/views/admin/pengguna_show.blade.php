@@ -74,7 +74,7 @@
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <x-show-item label="Bagian" :value="optional($pengguna->profile->bagian)->nama ?? '-'" />
+                    <x-show-item label="Bidang" :value="optional($pengguna->profile->bidang)->nama ?? '-'" />
 
                     <x-show-item label="Pembimbing" :value="optional(optional($pengguna->profile->pembimbing)->user)->name ?? '-'" />
 
@@ -96,7 +96,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <x-show-item label="NIP" :value="$pengguna->pembimbingProfile->nip ?? '-'" />
                     <x-show-item label="Jabatan" :value="$pengguna->pembimbingProfile->jabatan ?? '-'" />
-                    <x-show-item label="Bagian" :value="optional($pengguna->pembimbingProfile->bagian)->nama ?? '-'" />
+                    <x-show-item label="Bidang" :value="optional($pengguna->pembimbingProfile->bidang)->nama ?? '-'" />
                 </div>
             </section>
         @endif

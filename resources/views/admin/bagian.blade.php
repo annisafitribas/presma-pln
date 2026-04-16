@@ -1,6 +1,6 @@
 <x-appadmin-layout>
     <x-slot name="header">
-        <span class="text-[#0D1B2A]">Bagian</span>
+        <span class="text-[#0D1B2A]">Bidang</span>
     </x-slot>
 
     <div class="container mx-auto">
@@ -11,19 +11,19 @@
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold flex items-center gap-2">
                         <x-heroicon-o-rectangle-stack class="w-6 h-6" />
-                        Daftar Bagian
+                        Daftar Bidang
                     </h2>
 
                     <x-button variant="primary" icon="heroicon-o-plus-circle"
                         @click="window.dispatchEvent(
-                            new CustomEvent('open-modal', { detail: 'modal-create-bagian' })
+                            new CustomEvent('open-modal', { detail: 'modal-create-bidang' })
                         )">
                         Tambah
                     </x-button>
                 </div>
 
                 {{-- TABLE --}}
-                @if ($bagians->count())
+                @if ($bidangs->count())
 
                     {{-- DESKTOP --}}
                     <div class="hidden md:block">
@@ -34,25 +34,25 @@
                                     <thead>
                                         <tr>
                                             <x-table-th align="center" class="w-12">No</x-table-th>
-                                            <x-table-th>Nama Bagian</x-table-th>
-                                            <x-table-th>Kepala Bagian</x-table-th>
+                                            <x-table-th>Nama Bidang</x-table-th>
+                                            <x-table-th>Kepala Bidang</x-table-th>
                                             <x-table-th align="center">Aksi</x-table-th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($bagians as $bagian)
+                                        @foreach ($bidangs as $bidang)
                                             <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
                                                 <x-table-td align="center">
-                                                    {{ ($bagians->currentPage() - 1) * $bagians->perPage() + $loop->iteration }}
+                                                    {{ ($bidangs->currentPage() - 1) * $bidangs->perPage() + $loop->iteration }}
                                                 </x-table-td>
 
                                                 <x-table-td>
-                                                    {{ $bagian->nama }}
+                                                    {{ $bidang->nama }}
                                                 </x-table-td>
 
                                                 <x-table-td>
-                                                    {{ $bagian->kepala }}
+                                                    {{ $bidang->kepala }}
                                                 </x-table-td>
 
                                                 <x-table-td align="center">
@@ -63,21 +63,21 @@
                                                             class="p-1.5 rounded-md text-yellow-500 hover:bg-yellow-500/10"
                                                             @click="window.dispatchEvent(
                                                         new CustomEvent('open-modal', {
-                                                            detail: 'modal-edit-bagian-{{ $bagian->id }}'
+                                                            detail: 'modal-edit-bidang-{{ $bidang->id }}'
                                                         })
                                                     )">
                                                             <x-heroicon-o-pencil-square class="w-5 h-5" />
                                                         </button>
 
                                                         {{-- DELETE --}}
-                                                        @if (!$bagian->isUsed())
+                                                        @if (!$bidang->isUsed())
                                                             <button type="button"
                                                                 class="p-1.5 rounded-md text-red-500 hover:bg-red-500/10"
                                                                 @click="
-                                                        deleteId = {{ $bagian->id }};
-                                                        deleteNama = '{{ $bagian->nama }}';
+                                                        deleteId = {{ $bidang->id }};
+                                                        deleteNama = '{{ $bidang->nama }}';
                                                         window.dispatchEvent(new CustomEvent('open-confirm', {
-                                                            detail: { id: 'hapus-bagian-global' }
+                                                            detail: { id: 'hapus-bidang-global' }
                                                         }));
                                                     ">
                                                                 <x-heroicon-o-trash class="w-5 h-5" />
@@ -85,7 +85,7 @@
                                                         @else
                                                             <span
                                                                 class="p-1.5 rounded-md text-gray-400 cursor-not-allowed"
-                                                                title="Bagian sudah digunakan">
+                                                                title="Bidang sudah digunakan">
                                                                 <x-heroicon-o-trash class="w-5 h-5" />
                                                             </span>
                                                         @endif
@@ -103,13 +103,13 @@
 
                     <div class="flex justify-end mt-6">
 
-                        {{ $bagians->onEachSide(1)->links() }}
+                        {{ $bidangs->onEachSide(1)->links() }}
 
                     </div>
 
                     {{-- MOBILE --}}
                     <div class="md:hidden space-y-4">
-                        @foreach ($bagians as $bagian)
+                        @foreach ($bidangs as $bidang)
                             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
 
                                 <div class="flex items-start justify-between">
@@ -117,10 +117,10 @@
                                     {{-- INFO --}}
                                     <div>
                                         <p class="font-semibold text-[#0D1B2A] text-sm">
-                                            {{ $bagian->nama }}
+                                            {{ $bidang->nama }}
                                         </p>
                                         <p class="text-xs text-gray-500">
-                                            Kepala: {{ $bagian->kepala }}
+                                            Kepala: {{ $bidang->kepala }}
                                         </p>
                                     </div>
 
@@ -142,7 +142,7 @@
                                             open = false;
                                             window.dispatchEvent(
                                                 new CustomEvent('open-modal', {
-                                                    detail: 'modal-edit-bagian-{{ $bagian->id }}'
+                                                    detail: 'modal-edit-bidang-{{ $bidang->id }}'
                                                 })
                                             )
                                         ">
@@ -151,15 +151,15 @@
                                             </button>
 
                                             {{-- DELETE --}}
-                                            @if (!$bagian->isUsed())
+                                            @if (!$bidang->isUsed())
                                                 <button type="button"
                                                     class="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50"
                                                     @click="
                                                         open = false;
-                                                        deleteId = {{ $bagian->id }};
-                                                        deleteNama = '{{ $bagian->nama }}';
+                                                        deleteId = {{ $bidang->id }};
+                                                        deleteNama = '{{ $bidang->nama }}';
                                                         window.dispatchEvent(new CustomEvent('open-confirm', {
-                                                            detail: { id: 'hapus-bagian-global' }
+                                                            detail: { id: 'hapus-bidang-global' }
                                                         }));
                                                     ">
                                                     <x-heroicon-o-trash class="w-4 h-4" />
@@ -183,18 +183,18 @@
                 @else
                     <div class="text-center font-semibold py-10 flex flex-col items-center gap-2">
                         <x-heroicon-o-folder-minus class="w-12 h-12 text-[#CBD5E1]" />
-                        <span>Data bagian belum ada</span>
+                        <span>Data Bidang belum ada</span>
                     </div>
                 @endif
 
                 {{-- CONFIRM MODAL --}}
-                <x-confirm-modal id="hapus-bagian-global" title="Hapus Bagian" variant="danger">
-                    Yakin ingin menghapus bagian
+                <x-confirm-modal id="hapus-bidang-global" title="Hapus Bidang" variant="danger">
+                    Yakin ingin menghapus Bidang
                     <span class="font-semibold text-gray-800" x-text="deleteNama"></span>?
                 </x-confirm-modal>
 
-                <form :action="'{{ url('admin/bagian') }}/' + deleteId" method="POST"
-                    id="delete-form-hapus-bagian-global">
+                <form :action="'{{ url('admin/bidang') }}/' + deleteId" method="POST"
+                    id="delete-form-hapus-bidang-global">
                     @csrf
                     @method('DELETE')
                 </form>
@@ -206,33 +206,33 @@
     {{-- MODALS --}}
 
     {{-- CREATE --}}
-    <x-modal name="modal-create-bagian" maxWidth="lg" focusable>
+    <x-modal name="modal-create-Bidang" maxWidth="lg" focusable>
         <div class="p-6">
             <h2 class="text-lg font-semibold mb-4">
-                Tambah Bagian
+                Tambah Bidang
             </h2>
 
-            @if (session('open_modal') === 'modal-create-bagian')
+            @if (session('open_modal') === 'modal-create-bidang')
                 <x-alert-error />
             @endif
 
-            <form action="{{ route('admin.bagian.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('admin.bidang.store') }}" method="POST" class="space-y-4">
                 @csrf
 
                 <div>
-                    <x-input-label value="Nama Bagian*" />
+                    <x-input-label value="Nama Bidang*" />
                     <x-text-input name="nama" class="w-full mt-1" :value="old('nama')" />
                 </div>
 
                 <div>
-                    <x-input-label value="Kepala Bagian*" />
+                    <x-input-label value="Kepala Bidang*" />
                     <x-text-input name="kepala" class="w-full mt-1" :value="old('kepala')" />
                 </div>
 
                 <div class="flex justify-end gap-3 pt-4 border-t">
                     <x-button type="button" variant="secondary"
                         @click="window.dispatchEvent(
-                            new CustomEvent('close-modal', { detail: 'modal-create-bagian' })
+                            new CustomEvent('close-modal', { detail: 'modal-create-bidang' })
                         )">
                         Batal
                     </x-button>
@@ -244,33 +244,33 @@
             </form>
         </div>
     </x-modal>
-    @foreach ($bagians as $bagian)
-        <x-modal name="modal-edit-bagian-{{ $bagian->id }}" maxWidth="lg" focusable>
+    @foreach ($bidangs as $bidang)
+        <x-modal name="modal-edit-bidang-{{ $bidang->id }}" maxWidth="lg" focusable>
             <div class="p-6">
 
                 <h2 class="text-lg font-semibold mb-4">
-                    Edit Bagian
+                    Edit Bidang
                 </h2>
 
-                @if (session('open_modal') === 'modal-edit-bagian-' . $bagian->id)
+                @if (session('open_modal') === 'modal-edit-bidang-' . $bidang->id)
                     <x-alert-error />
                 @endif
 
-                <form action="{{ route('admin.bagian.update', $bagian->id) }}" method="POST" class="space-y-4">
+                <form action="{{ route('admin.bidang.update', $bidang->id) }}" method="POST" class="space-y-4">
 
                     @csrf
                     @method('PUT')
 
                     {{-- NAMA --}}
                     <div>
-                        <x-input-label value="Nama Bagian*" />
-                        <x-text-input name="nama" class="w-full mt-1" :value="old('nama', $bagian->nama)" />
+                        <x-input-label value="Nama Bidang*" />
+                        <x-text-input name="nama" class="w-full mt-1" :value="old('nama', $bidang->nama)" />
                     </div>
 
                     {{-- KEPALA --}}
                     <div>
-                        <x-input-label value="Kepala Bagian*" />
-                        <x-text-input name="kepala" class="w-full mt-1" :value="old('kepala', $bagian->kepala)" />
+                        <x-input-label value="Kepala Bidang*" />
+                        <x-text-input name="kepala" class="w-full mt-1" :value="old('kepala', $bidang->kepala)" />
                     </div>
 
                     {{-- ACTION --}}
@@ -279,7 +279,7 @@
                         <x-button type="button" variant="secondary"
                             @click="window.dispatchEvent(
                             new CustomEvent('close-modal', {
-                                detail: 'modal-edit-bagian-{{ $bagian->id }}'
+                                detail: 'modal-edit-bidang-{{ $bidang->id }}'
                             })
                         )">
                             Batal

@@ -30,7 +30,7 @@ class DashboardController extends Controller
             ->whereHas('profile.pembimbing.user', function ($q) use ($pembimbing) {
                 $q->where('users.id', $pembimbing->id);
             })
-            ->with('profile.bagian')
+            ->with('profile.bidang')
             ->get();
 
         $pesertaIds = $peserta->pluck('id');

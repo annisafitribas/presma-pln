@@ -148,7 +148,7 @@ class PresensiController extends Controller
     {
         $today = \Carbon\Carbon::today();
 
-        $users = User::with(['profile.bagian', 'profile.pembimbing.user'])
+        $users = User::with(['profile.bidang', 'profile.pembimbing.user'])
             ->where('role', 'user')
             ->whereHas('profile', function ($q) {
                 $q->where('status_magang', 'Aktif');

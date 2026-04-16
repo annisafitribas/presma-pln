@@ -40,7 +40,7 @@
 
                 </div>
             </x-card>
-            
+
             {{-- JAM OPERASIONAL --}}
             <x-card class="space-y-4">
 
@@ -52,7 +52,7 @@
                     ? collect($konfigurasi->hari_kerja)->map(fn($hari) => ucfirst($hari))->implode(', ')
                     : 'Tidak diatur'" />
 
-                {{-- BAGIAN JAM --}}
+                {{-- Bidang JAM --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
 
                     {{-- JAM KERJA --}}

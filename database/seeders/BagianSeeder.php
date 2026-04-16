@@ -3,33 +3,33 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Bagian;
+use App\Models\Bidang;
 
-class BagianSeeder extends Seeder
+class bidangseeder extends Seeder
 {
     public function run(): void
     {
-        $bagians = [
+        $bidangs = [
             [
-                'nama_bagian'   => 'Keuangan',
-                'kepala_bagian' => 'Emy Astuti',
+                'nama_bidang'   => 'Keuangan',
+                'kepala_bidang' => 'Emy Astuti',
                 'nip'           => '19801111 202012 1 001',
             ],
             [
-                'nama_bagian'   => 'Sales',
-                'kepala_bagian' => 'Muhammad Sigit Kurniawan',
+                'nama_bidang'   => 'Sales',
+                'kepala_bidang' => 'Muhammad Sigit Kurniawan',
                 'nip'           => '19802222 202012 1 002',
             ],
             [
-                'nama_bagian'   => 'PP',
-                'kepala_bagian' => 'Asterina Azizah',
+                'nama_bidang'   => 'PP',
+                'kepala_bidang' => 'Asterina Azizah',
                 'nip'           => '19803333 202012 1 003',
             ],
         ];
 
-        foreach ($bagians as $b) {
-            Bagian::firstOrCreate(
-                ['nama_bagian' => $b['nama_bagian']], // kolom UNIQUE
+        foreach ($bidangs as $b) {
+            Bidang::firstOrCreate(
+                ['nama_bidang' => $b['nama_bidang']], // kolom UNIQUE
                 $b
             );
         }

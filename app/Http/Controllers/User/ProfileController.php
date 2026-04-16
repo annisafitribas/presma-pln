@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         $user = $request->user()->load([
-            'profile.bagian',
+            'profile.bidang',
             'profile.pembimbing.user'
         ]);
 
@@ -31,7 +31,7 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $user = $request->user()->load([
-            'profile.bagian',
+            'profile.bidang',
             'profile.pembimbing.user'
         ]);
 

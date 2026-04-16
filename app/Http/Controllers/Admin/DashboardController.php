@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Presensi;
 use App\Models\User;
-use App\Models\Bagian;
+use App\Models\Bidang;
 use App\Models\Telat;
 use App\Models\Konfigurasi;
 use Carbon\Carbon;
@@ -29,7 +29,7 @@ class DashboardController extends Controller
             ->whereHas('profile', function ($q) {
                 $q->where('status_magang', 'Aktif');
             })
-            ->with(['profile.bagian', 'profile.pembimbing.user'])
+            ->with(['profile.bidang', 'profile.pembimbing.user'])
             ->get();
 
         $totalPeserta = $users->count();
@@ -63,7 +63,7 @@ class DashboardController extends Controller
         $totalPembimbing = User::where('role', 'pembimbing')->count();
         $totalAdmin      = User::where('role', 'admin')->count();
         $totalPengguna   = User::count();
-        $totalBagian     = Bagian::count();
+        $totalBidang     = Bidang::count();
 
         return view('admin.dashboard', compact(
             'hadir',
@@ -78,7 +78,7 @@ class DashboardController extends Controller
             'totalPembimbing',
             'totalAdmin',
             'totalPengguna',
-            'totalBagian'
+            'totalbidang'
         ));
     }
 }
