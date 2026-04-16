@@ -21,7 +21,8 @@ class PengajuanController extends Controller
     {
         $pengajuans = Pengajuan::where('user_id', Auth::id())
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('user.pengajuan', compact('pengajuans'));
     }

@@ -250,11 +250,12 @@
                                 </tr>
                             @endforelse
                         </tbody>
-
                     </table>
-
                 </div>
+            </div>
 
+            <div class="flex justify-end mt-6">
+                {{ $pengajuans->onEachSide(1)->links() }}
             </div>
 
         </x-card>

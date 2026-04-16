@@ -22,6 +22,7 @@
         </script>
     @endif
 
+
     @if (session('error'))
         <script>
             window.addEventListener('load', () => {
@@ -110,7 +111,7 @@
 
         </x-card>
 
-        <x-card class="p-0 overflow-hidden">
+        <x-card class="p-0 overflow-hidden mb-6">
 
             {{-- HEADER --}}
             <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
@@ -303,7 +304,9 @@
                                         $item->status === 'hadir' && $item->is_late ? 'telat' : $item->status;
                                 @endphp
                                 <tr class="border-b hover:bg-gray-50 text-center">
-                                    <td class="px-4 py-4">{{ $i + 1 }}</td>
+                                    <td class="px-4 py-4">
+                                        {{ ($presensi->currentPage() - 1) * $presensi->perPage() + $loop->iteration }}
+                                    </td>
                                     <td class="px-4 py-4 text-left whitespace-nowrap">
                                         {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
                                     </td>
@@ -424,6 +427,11 @@
                     </table>
                 </div>
             </div>
+
+            <div class="flex justify-end mt-6">
+                {{ $presensi->onEachSide(1)->links() }}
+            </div>
+            
         </x-card>
 
         <x-modal name="export-presensi" maxWidth="md">

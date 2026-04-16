@@ -14,17 +14,12 @@ class LaporanController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-
-        $sort = $request->get('sort', 'desc'); // default terbaru
-
+        $sort = $request->get('sort', 'desc');
         $presensi = Presensi::with('updatedBy')
             ->where('user_id', $user->id)
             ->orderBy('tanggal', $sort)
-            ->get();
-
-        $presensi = Presensi::where('user_id', $user->id)
-            ->orderBy('tanggal', $sort)
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('user.laporan', compact(
             'presensi',

@@ -110,7 +110,6 @@
         }
 
         /* TTD */
-
         .ttd-container {
             margin-top: 40px;
             width: 100%;
@@ -121,12 +120,26 @@
             width: 230px;
             display: inline-block;
             text-align: left;
+            font-size: 12px;
+            /* teks biasa */
         }
 
         .ttd-name {
-            margin-top: 60px;
+            margin-top: 80px;
+            font-size: 12px;
             font-weight: bold;
             text-decoration: underline;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            height: 50px;
+            text-align: center;
+            font-size: 10px;
+            color: #555;
         }
     </style>
 </head>
@@ -138,8 +151,9 @@
 
         <div class="header-title">
             <h1>LAPORAN PRESENSI PESERTA MAGANG</h1>
-            <h2>{{ $konfigurasi->nama_pt ?? '-' }}</h2>
-            <p>{{ $konfigurasi->alamat ?? '-' }}</p>
+            <h2>{{ $konfigurasi->nama_pt ?? ' ' }}</h2>
+            <p>{{ $konfigurasi->alamat ?? ' ' }}</p>
+            <p>Laman: presma.batuah.id</p>
         </div>
 
         <div class="header-line"></div>
@@ -152,92 +166,133 @@
 
                 <td class="label">NIM / NISN</td>
                 <td class="colon">:</td>
-                <td class="value">{{ $user->profile->nomor_induk ?? '-' }}</td>
+                <td class="value">{{ $user->profile->nomor_induk ?? ' ' }}</td>
             </tr>
 
             <tr>
                 <td class="label">Asal Instansi</td>
                 <td class="colon">:</td>
-                <td class="value">{{ $user->profile->pendidikan ?? '-' }}</td>
+                <td class="value">{{ $user->profile->pendidikan ?? ' ' }}</td>
 
                 <td class="label">Jurusan</td>
                 <td class="colon">:</td>
-                <td class="value">{{ $user->profile->jurusan ?? '-' }}</td>
+                <td class="value">{{ $user->profile->jurusan ?? ' ' }}</td>
             </tr>
 
             <tr>
                 <td class="label">Periode Magang</td>
                 <td class="colon">:</td>
                 <td class="value">
-                    {{ optional($user->profile->tgl_masuk)->format('d M Y') ?? '-' }}
+                    {{ optional($user->profile->tgl_masuk)->format('d/m/Y') ?? ' ' }}
                     -
-                    {{ optional($user->profile->tgl_keluar)->format('d M Y') ?? '-' }}
+                    {{ optional($user->profile->tgl_keluar)->format('d/m/Y') ?? ' ' }}
                 </td>
 
-                <td class="label">Divisi Magang</td>
+                <td class="label">Bidang Magang</td>
                 <td class="colon">:</td>
                 <td class="value">
-                    {{ optional($user->profile->bagian)->nama ?? '-' }}
+                    {{ optional($user->profile->bagian)->nama ?? ' ' }}
                 </td>
             </tr>
         </table>
 
     </div>
 
-    {{-- ISI --}}
-    <table class="presensi">
-        <thead>
-            <tr>
-                <th width="5%">No</th>
-                <th width="15%">Tanggal</th>
-                <th width="15%">Masuk</th>
-                <th width="15%">Keluar</th>
-                <th width="50%">Catatan Kegiatan</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($presensi as $i => $p)
-                <tr>
-                    <td align="center">{{ $i + 1 }}</td>
-                    <td align="center">
-                        {{ \Carbon\Carbon::parse($p->tanggal)->format('d/m/Y') }}
-                    </td>
-                    @php
-                        $belumVerif = $p->status === 'pending';
-                    @endphp
+    @php
+        $first = optional($presensi->first())->tanggal;
+        $last = optional($presensi->last())->tanggal;
+    @endphp
 
-                    @if ($belumVerif)
-                        <td align="center">-</td>
-                        <td align="center">-</td>
-                        <td>
-                            Datang terlambat dan belum mendapat verifikasi admin
-                        </td>
-                    @else
-                        <td align="center">{{ $p->jam_masuk ?? '-' }}</td>
-                        <td align="center">{{ $p->jam_keluar ?? '-' }}</td>
-                        <td>
-                            {!! $p->keterangan ? nl2br(e($p->keterangan)) : '-' !!}
-                        </td>
-                    @endif
+    <div style="margin-top:20px; font-size:12px;">
+
+        <p style="margin-bottom:5px;">
+            Total Rekapitulasi
+            ({{ $first ? \Carbon\Carbon::parse($first)->format('d/m/Y') : '-' }}
+            -
+            {{ $last ? \Carbon\Carbon::parse($last)->format('d/m/Y') : '-' }})
+        </p>
+
+        <table style="width:100%; margin-bottom:10px; border-collapse:collapse; font-size:11px;">
+            <tr>
+                <th style="border:1px solid #000; padding:5px;">Hadir</th>
+                <th style="border:1px solid #000; padding:5px;">Telat</th>
+                <th style="border:1px solid #000; padding:5px;">Sakit</th>
+                <th style="border:1px solid #000; padding:5px;">Izin</th>
+                <th style="border:1px solid #000; padding:5px;">Alpha</th>
+            </tr>
+            <tr>
+                <td align="center" style="border:1px solid #000; padding:5px;">{{ $rekap['hadir'] }}</td>
+                <td align="center" style="border:1px solid #000; padding:5px;">{{ $rekap['telat'] }}</td>
+                <td align="center" style="border:1px solid #000; padding:5px;">{{ $rekap['sakit'] }}</td>
+                <td align="center" style="border:1px solid #000; padding:5px;">{{ $rekap['izin'] }}</td>
+                <td align="center" style="border:1px solid #000; padding:5px;">{{ $rekap['alpha'] }}</td>
+            </tr>
+        </table>
+    </div>
+
+    {{-- ISI --}}
+    <div style="margin-top:8px; font-size:12px;">
+
+        <p style="margin-bottom:5px;">
+            Tabel Laporan Presensi
+        </p>
+        <table class="presensi">
+            <thead>
+                <tr>
+                    <th width="5%">No</th>
+                    <th width="15%">Tanggal</th>
+                    <th width="15%">Masuk</th>
+                    <th width="15%">Keluar</th>
+                    <th width="50%">Catatan Kegiatan</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($presensi as $i => $p)
+                    <tr>
+                        <td align="center">{{ $i + 1 }}</td>
+                        <td align="center">
+                            {{ \Carbon\Carbon::parse($p->tanggal)->format('d/m/Y') }}
+                        </td>
+                        @php
+                            $belumVerif = $p->status === 'pending';
+                        @endphp
+
+                        @if ($belumVerif)
+                            <td align="center">-</td>
+                            <td align="center">-</td>
+                            <td>
+                                Datang terlambat dan belum mendapat verifikasi admin
+                            </td>
+                        @else
+                            <td align="center">{{ $p->jam_masuk ?? ' ' }}</td>
+                            <td align="center">{{ $p->jam_keluar ?? ' ' }}</td>
+                            <td>
+                                {!! $p->keterangan ? nl2br(e($p->keterangan)) : ' ' !!}
+                            </td>
+                        @endif
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     {{-- TTD DI AKHIR SAJA --}}
     <div class="ttd-container">
         <div class="ttd-box">
             <p>Banjarbaru, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-            <p>Pembimbing</p>
+            <p>Pembimbing,</p>
 
             <div class="ttd-name">
-                {{ optional($user->profile->pembimbing->user)->name ?? '-' }}
+                {{ optional($user->profile->pembimbing->user)->name ?? ' ' }}
             </div>
 
-            <p>NIP. {{ optional($user->profile->pembimbing)->nip ?? '-' }}</p>
+            @if (optional($user->profile->pembimbing)->nip)
+                <p>NIP. {{ $user->profile->pembimbing->nip }}</p>
+            @endif
         </div>
     </div>
-
+    <div class="footer">
+        Dicetak dari Sistem Presensi Magang (PRESMA)
+    </div>
 </body>
-
 </html>
