@@ -63,7 +63,7 @@
                                         <tr x-data="{ open: false }" class="hover:bg-gray-50 transition">
 
                                             <x-table-td class="text-center">
-                                                {{ $loop->iteration }}
+                                                {{ ($presensis->currentPage() - 1) * $presensis->perPage() + $loop->iteration }}
                                             </x-table-td>
 
                                             <x-table-td>{{ $tanggal }}</x-table-td>
@@ -296,7 +296,9 @@
                 </div>
 
             @endif
-
+            <div class="flex justify-end mt-6">
+                {{ $presensis->onEachSide(1)->links() }}
+            </div>
             @foreach ($presensis as $p)
                 @if (in_array($p->status, ['alpha', 'hadir']))
                     <div id="edit-modal-{{ $p->id }}"

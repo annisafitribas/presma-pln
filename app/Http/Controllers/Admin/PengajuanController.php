@@ -14,8 +14,16 @@ class PengajuanController extends Controller
     public function index()
     {
         $pengajuans = Pengajuan::with('user')
-            ->latest()
-            ->get();
+            ->orderByRaw("
+                CASE 
+                    WHEN status = 'pending' THEN 1
+                    WHEN status = 'approved' THEN 2
+                    ELSE 3
+                END
+            ")
+            ->orderByDesc('tgl_mulai')
+            ->paginate(15)
+            ->withQueryString();
 
         $konfigurasi = Konfigurasi::first();
 
@@ -58,7 +66,7 @@ class PengajuanController extends Controller
                         'tanggal' => $date->toDateString(),
                     ],
                     [
-                        'konfigurasi_id'=> $konfigurasi->id,
+                        'konfigurasi_id' => $konfigurasi->id,
                         'status'       => $pengajuan->jenis,
                         'keterangan'   => $pengajuan->keterangan,
                         'pengajuan_id' => $pengajuan->id,

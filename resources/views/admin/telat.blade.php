@@ -122,7 +122,7 @@
 
                                     {{-- NO --}}
                                     <x-table-td align="center" class="font-medium text-gray-700">
-                                        {{ $loop->iteration }}
+                                        {{ ($telats->currentPage() - 1) * $telats->perPage() + $loop->iteration }}
                                     </x-table-td>
 
                                     {{-- NAMA (LEFT) --}}
@@ -186,6 +186,10 @@
 
                     </x-table>
                 </div>
+
+                <div class="flex justify-end mt-6">
+                    {{ $telats->onEachSide(1)->links() }}
+                </div>
             @else
                 <div class="text-center py-10 text-gray-500">
                     Belum ada pengajuan telat
@@ -194,7 +198,6 @@
 
         </x-card>
     </div>
-
 
     {{-- MODALS --}}
     @foreach ($telats as $telat)

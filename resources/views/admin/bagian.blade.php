@@ -44,7 +44,7 @@
                                         @foreach ($bagians as $bagian)
                                             <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
                                                 <x-table-td align="center">
-                                                    {{ $loop->iteration }}
+                                                    {{ ($bagians->currentPage() - 1) * $bagians->perPage() + $loop->iteration }}
                                                 </x-table-td>
 
                                                 <x-table-td>
@@ -99,6 +99,12 @@
 
                             </div>
                         </div>
+                    </div>
+
+                    <div class="flex justify-end mt-6">
+
+                        {{ $bagians->onEachSide(1)->links() }}
+
                     </div>
 
                     {{-- MOBILE --}}

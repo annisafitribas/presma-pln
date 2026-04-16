@@ -172,7 +172,7 @@
 
                                 <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
                                     <x-table-td align="center">
-                                        {{ $loop->iteration }}
+                                        {{ ($pengajuans->currentPage() - 1) * $pengajuans->perPage() + $loop->iteration }}
                                     </x-table-td>
 
                                     <x-table-td class="font-semibold">
@@ -276,6 +276,10 @@
                             @endforeach
                         </tbody>
                     </x-table>
+                </div>
+
+                <div class="flex justify-end mt-6">
+                    {{ $pengajuans->onEachSide(1)->links() }}
                 </div>
             @else
                 <div class="text-center py-10 text-gray-500">

@@ -107,7 +107,7 @@
                                             @endphp
 
                                             <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
-                                                <x-table-td align="center">{{ $loop->iteration }}</x-table-td>
+                                                <x-table-td align="center">{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</x-table-td>
                                                 <x-table-td>{{ $user->name }}</x-table-td>
                                                 <x-table-td>{{ $user->email }}</x-table-td>
 
@@ -298,11 +298,16 @@
                             </div>
                         @endforeach
                     </div>
+
+                    <div class="flex justify-end mt-6 px-6">
+                        {{ $users->onEachSide(1)->links() }}
+                    </div>
                 @else
                     <div class="text-center py-10 text-gray-400">
                         Data pengguna belum ada
                     </div>
                 @endif
+
                 {{-- CONFIRM DELETE --}}
                 <x-confirm-modal id="hapus-user-global" title="Hapus Pengguna" variant="danger">
                     Yakin ingin menghapus pengguna

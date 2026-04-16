@@ -45,7 +45,7 @@
                                         <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
 
                                             <x-table-td align="center">
-                                                {{ $loop->iteration }}
+                                                {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
                                             </x-table-td>
 
                                             <x-table-td>
@@ -181,6 +181,11 @@
                     @endforeach
 
                 </div>
+
+                <div class="flex justify-end mt-6 px-6">
+                    {{ $users->onEachSide(1)->links() }}
+                </div>
+
             @else
                 <div class="text-center font-semibold py-10 flex flex-col items-center gap-2">
                     <x-heroicon-o-folder-minus class="w-12 h-12 text-[#CBD5E1]" />

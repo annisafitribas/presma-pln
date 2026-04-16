@@ -27,7 +27,17 @@ class TelatController extends Controller
             $query->where('status', $request->status);
         }
 
-        $telats = $query->latest()->get();
+        $telats = $query
+            ->orderByRaw("
+                CASE 
+                    WHEN status = 'pending' THEN 1
+                    WHEN status = 'approved' THEN 2
+                    ELSE 3
+                END
+            ")
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.telat', compact('telats'));
     }

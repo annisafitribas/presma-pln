@@ -54,7 +54,7 @@ class DashboardController extends Controller
             ->where('status', 'approved')
             ->count();
 
-        // 🔥 INTI: BELUM PRESENSI
+        // INTI: BELUM PRESENSI
         $belumPresensi = $users->reject(fn($user) => isset($presensiHariIni[$user->id]));
 
         $belumAbsen = $belumPresensi->count();

@@ -12,7 +12,8 @@ class BagianController extends Controller
 {
     public function index()
     {
-        $bagians = Bagian::latest()->get();
+        $bagians = Bagian::orderByDesc('updated_at')
+            ->paginate(10);
         return view('admin.bagian', compact('bagians'));
     }
 

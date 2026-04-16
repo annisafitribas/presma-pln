@@ -68,7 +68,7 @@
                             <tr class="hover:bg-[#0D1B2A1A] even:bg-[#F8FAFC] transition">
 
                                 <x-table-td align="center">
-                                    {{ $loop->iteration }}
+                                    {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
                                 </x-table-td>
 
                                 <x-table-td class="font-semibold">
@@ -166,6 +166,11 @@
                     </div>
                 @endforeach
             </div>
+
+            <div class="flex justify-end mt-6">
+                {{ $users->onEachSide(1)->links() }}
+            </div>
+
         </x-card>
     </div>
 </x-appadmin-layout>

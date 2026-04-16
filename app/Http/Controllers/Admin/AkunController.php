@@ -30,7 +30,38 @@ class AkunController extends Controller
             $query->where('role', $role);
         }
 
-        $users = $query->get();
+        if ($role === 'user') {
+
+            // USER → Aktif dulu baru tidak aktif
+            $query->leftJoin('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+                ->orderByRaw("
+            CASE 
+                WHEN user_profiles.status_magang = 'Aktif' THEN 1
+                ELSE 2
+            END
+        ")
+                ->orderByDesc('users.updated_at')
+                ->select('users.*');
+        } elseif (in_array($role, ['admin', 'pembimbing'])) {
+
+            // ADMIN & PEMBIMBING → terbaru
+            $query->orderByDesc('updated_at');
+        } else {
+
+            // SEMUA → kombinasi
+            $query->leftJoin('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+                ->orderByRaw("
+            CASE 
+                WHEN users.role = 'user' AND user_profiles.status_magang = 'Aktif' THEN 1
+                WHEN users.role = 'user' THEN 2
+                ELSE 3
+            END
+        ")
+                ->orderByDesc('users.updated_at')
+                ->select('users.*');
+        }
+
+        $users = $query->paginate(1)->withQueryString();
 
         return view('admin.pengguna_index', compact('users', 'role'));
     }

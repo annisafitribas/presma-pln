@@ -18,17 +18,29 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', 'user')->get();
+        $users = User::leftJoin('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+            ->where('users.role', 'user')
+            ->orderByRaw("
+                CASE 
+                    WHEN user_profiles.status_magang = 'Aktif' THEN 1
+                    ELSE 2
+                END
+            ")
+            ->orderByDesc('users.updated_at')
+            ->select('users.*')
+            ->paginate(10)
+            ->withQueryString();
 
-        $users->map(function ($user) {
+        $users->getCollection()->transform(function ($user) {
+
             $rekap = Presensi::where('user_id', $user->id)
                 ->selectRaw("
-                    SUM(status = 'hadir')        as hadir,
-                    SUM(status = 'telat')        as telat,
-                    SUM(status = 'sakit')        as sakit,
-                    SUM(status = 'izin')         as izin,
-                    SUM(status = 'alpha')  as alpha
-                ")
+            SUM(status = 'hadir') as hadir,
+            SUM(status = 'telat') as telat,
+            SUM(status = 'sakit') as sakit,
+            SUM(status = 'izin') as izin,
+            SUM(status = 'alpha') as alpha
+        ")
                 ->first();
 
             $user->total_hadir = $rekap->hadir ?? 0;
@@ -36,6 +48,8 @@ class PresensiController extends Controller
             $user->total_sakit = $rekap->sakit ?? 0;
             $user->total_izin  = $rekap->izin ?? 0;
             $user->total_alpha = $rekap->alpha ?? 0;
+
+            return $user;
         });
 
         return view('admin.presensi_index', compact('users'));
@@ -47,8 +61,9 @@ class PresensiController extends Controller
     public function show(User $user)
     {
         $presensis = Presensi::where('user_id', $user->id)
-            ->orderBy('tanggal', 'desc')
-            ->get();
+            ->latest('tanggal')
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.presensi_show', compact('user', 'presensis'));
     }
@@ -139,7 +154,8 @@ class PresensiController extends Controller
                 $q->where('status_magang', 'Aktif');
             })
             ->orderBy('name')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         $presensiHariIni = Presensi::whereDate('tanggal', $today)
             ->get()
