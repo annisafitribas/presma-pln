@@ -24,8 +24,9 @@ class PengajuanController extends Controller
         // ambil semua pengajuan peserta binaan
         $pengajuans = Pengajuan::with('user')
             ->whereIn('user_id', $pesertaIds)
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('pembimbing.pengajuan_index', compact('pengajuans'));
     }

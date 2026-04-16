@@ -150,7 +150,7 @@
                     <tbody class="divide-y">
                         @forelse($presensi as $index => $p)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 text-center">{{ $index + 1 }}</td>
+                                <td class="px-4 py-2 text-center">{{ ($presensi->currentPage() - 1) * $presensi->perPage() + $loop->iteration }}</td>
                                 <td class="px-4 py-2">
                                     {{ \Carbon\Carbon::parse($p->tanggal)->format('d M Y') }}
                                 </td>
@@ -305,6 +305,10 @@
                     </div>
                 @endforelse
 
+            </div>
+
+            <div class="flex justify-end mt-6">
+                {{ $presensi->onEachSide(1)->links() }}
             </div>
 
         </x-card>

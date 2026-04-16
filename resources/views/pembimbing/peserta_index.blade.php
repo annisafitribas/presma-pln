@@ -8,7 +8,6 @@
     </x-slot>
 
     <x-card>
-
         <div class="mb-4 text-sm text-gray-600">
             Total Peserta :
             <span class="font-semibold text-gray-800">
@@ -95,8 +94,6 @@
             </table>
         </div>
 
-
-
         {{-- MOBILE CARD --}}
         <div class="lg:hidden space-y-4">
 
@@ -169,6 +166,10 @@
 
         </div>
 
+        <div class="flex justify-end mt-6">
+            {{ $peserta->onEachSide(1)->links() }}
+            
+        </div>
     </x-card>
 
 </x-apppembimbing-layout>

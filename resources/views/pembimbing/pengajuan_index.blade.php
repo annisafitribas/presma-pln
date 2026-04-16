@@ -8,12 +8,11 @@
     </x-slot>
 
     <x-card>
-
         <div class="text-sm flex items-center justify-between mb-4">
             <div class="text-gray-600">
                 Total Pengajuan :
                 <span class="font-semibold text-gray-800">
-                    {{ $pengajuans->count() }}
+                    {{ $pengajuans->total() }}
                 </span>
             </div>
         </div>
@@ -168,6 +167,10 @@
                 </div>
             @endforelse
 
+        </div>
+
+        <div class="flex justify-end mt-6">
+            {{ $pengajuans->onEachSide(1)->links() }}
         </div>
 
     </x-card>

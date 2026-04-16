@@ -19,10 +19,18 @@ class PesertaController extends Controller
             ->whereHas('profile.pembimbing.user', function ($q) use ($pembimbing) {
                 $q->where('users.id', $pembimbing->id);
             })
-            ->get();
+
+            // URUTAN: AKTIF DI ATAS
+            ->join('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+            ->orderByRaw("FIELD(user_profiles.status_magang, 'Aktif', 'Tidak Aktif')")
+            ->select('users.*')
+
+            // PAGINATION 10
+            ->paginate(10)
+            ->withQueryString();
 
         // rekap presensi
-        $peserta->map(function ($user) {
+        $peserta->getCollection()->map(function ($user) {
             $hadir = $user->presensi->whereIn('status', ['hadir', 'telat'])->count();
 
             $tidakHadir = $user->presensi->whereIn('status', [
@@ -50,8 +58,9 @@ class PesertaController extends Controller
         abort_unless($isBinaan, 403);
 
         $presensi = $user->presensi()
-            ->orderBy('tanggal', 'desc')
-            ->get();
+            ->orderByDesc('tanggal')
+            ->paginate(20)
+            ->withQueryString();
 
         //  REKAP LENGKAP 
         $hadir = $presensi->where('status', 'hadir')->count();
