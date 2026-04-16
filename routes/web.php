@@ -129,6 +129,7 @@ Route::middleware(['auth', 'role:admin'])
         // Route::patch('/telat/{telat}/approve', [AdminTelatController::class, 'approve'])->name('telat.approve');
         // Route::patch('/telat/{telat}/reject', [AdminTelatController::class, 'reject'])->name('telat.reject');
         Route::patch('/telat/{telat}/update-status', [AdminTelatController::class, 'updateStatus'])->name('telat.updateStatus');
+        
     });
 
 // ROLE: USER

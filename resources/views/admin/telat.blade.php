@@ -60,7 +60,7 @@
                                     @if ($telat->status === 'pending')
                                         <button type="button"
                                             x-on:click="$dispatch('open-modal', 'status-{{ $telat->id }}')"
-                                            class="text-blue-600 hover:underline underline text-sm">
+                                            class="text-blue-600 hover:underline text-sm">
                                             Update
                                         </button>
                                     @else
@@ -76,6 +76,17 @@
                                 {{ $telat->alasan }}
                             </div>
 
+                            <div class="text-sm">
+                                @if ($telat->bukti)
+                                    <a href="{{ asset('storage/' . $telat->bukti) }}" target="_blank"
+                                        class="text-blue-600 underline">
+                                        <x-heroicon-o-document-arrow-down class="w-4 h-4" />
+                                        <span>File</span>
+                                    </a>
+                                @else
+                                    <span class="text-gray-400">-</span>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -90,6 +101,7 @@
                                 <x-table-th>Nama</x-table-th> {{-- default left --}}
                                 <x-table-th>Tanggal</x-table-th> {{-- default left --}}
                                 <x-table-th align="left">Alasan</x-table-th>
+                                <x-table-th align="center">Bukti</x-table-th>
                                 <x-table-th align="center">Jam Masuk</x-table-th>
                                 <x-table-th align="center">Status</x-table-th>
                                 <x-table-th align="center">Aksi</x-table-th>
@@ -128,6 +140,20 @@
                                         {{ $telat->alasan }}
                                     </x-table-td>
 
+                                    <x-table-td align="center">
+                                        <div class="flex items-center justify-center gap-1">
+                                            @if ($telat->bukti)
+                                                <a href="{{ asset('storage/' . $telat->bukti) }}" target="_blank"
+                                                    class="flex items-center gap-1 text-[#123B6E] hover:underline">
+                                                    <x-heroicon-o-document-arrow-down class="w-4 h-4" />
+                                                    <span>File</span>
+                                                </a>
+                                            @else
+                                                <span>-</span>
+                                            @endif
+                                        </div>
+                                    </x-table-td>
+
                                     {{-- JAM --}}
                                     <x-table-td align="center">
                                         {{ $telat->jam_masuk }}
@@ -146,11 +172,11 @@
                                         @if ($telat->status === 'pending')
                                             <button type="button"
                                                 x-on:click="$dispatch('open-modal', 'status-{{ $telat->id }}')"
-                                                class="text-blue-600 hover:underline underline text-sm font-semibold">
+                                                class="text-blue-600 hover:underline text-sm font-semibold">
                                                 Update
                                             </button>
                                         @else
-                                            <span class="text-gray-500">Update</span>
+                                            <span class="text-gray-500 text-sm">Update</span>
                                         @endif
                                     </x-table-td>
 
@@ -175,7 +201,8 @@
         <x-modal name="status-{{ $telat->id }}" maxWidth="lg">
 
             <form id="form-status-{{ $telat->id }}" method="POST"
-                action="{{ route('admin.telat.updateStatus', $telat->id) }}" class="p-6 space-y-4">
+                action="{{ route('admin.telat.updateStatus', $telat->id) }}" enctype="multipart/form-data"
+                class="p-6 space-y-4">
 
                 @csrf
                 @method('PATCH')
@@ -240,6 +267,17 @@
                             </p>
                         </div>
 
+                        <div class="border-t border-gray-200"></div>
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 tracking-wider">
+                                Upload Bukti (Admin)
+                            </p>
+
+                            <input type="file" name="bukti"
+                                class="mt-2 block w-full text-sm border rounded-lg p-2">
+                        </div>
+
                     </div>
                 </div>
 
@@ -261,7 +299,8 @@
                 </div>
 
                 {{-- CATATAN --}}
-                <textarea name="catatan_admin" id="catatan-{{ $telat->id }}" rows="3" placeholder="Tambahkan catatan admin..."
+                <textarea name="catatan_admin" id="catatan-{{ $telat->id }}" rows="3"
+                    placeholder="Tambahkan catatan admin..."
                     class="w-full border rounded-xl p-3 text-sm
                     @if (old('telat_id') == $telat->id && $errors->has('catatan_admin')) border-red-500 focus:border-red-500 focus:ring-red-200 @endif">{{ old('telat_id') == $telat->id ? old('catatan_admin') : '' }}</textarea>
 

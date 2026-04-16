@@ -60,12 +60,12 @@
 
                                                     @if ($status === 'Aktif')
                                                         <span
-                                                            class="px-2 py-0.5 text-[10px] rounded-full bg-green-100 text-green-700 font-semibold">
+                                                            class="px-2 py-[4px] text-[10px] leading-none rounded-full bg-green-100 text-green-700 font-semibold">
                                                             Aktif
                                                         </span>
                                                     @else
                                                         <span
-                                                            class="px-2 py-0.5 text-[10px] rounded-full bg-red-100 text-red-700 font-semibold">
+                                                            class="px-2 py-[4px] text-[10px] leading-none rounded-full bg-red-100 text-red-700 font-semibold">
                                                             Tidak Aktif
                                                         </span>
                                                     @endif

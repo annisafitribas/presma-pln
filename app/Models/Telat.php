@@ -28,6 +28,7 @@ class Telat extends Model
 
         'approved_by',
         'approved_at',
+        'bukti',
     ];
 
     protected $casts = [

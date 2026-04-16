@@ -81,7 +81,7 @@
 
                             <td class="px-4 py-3 text-center">
                                 <a href="{{ route('pembimbing.pengajuan.show', $item->id) }}"
-                                    class="text-blue-600 hover:underline underline text-sm font-semibold">
+                                    class="text-blue-600 hover:underline text-sm font-semibold">
                                     Detail
                                 </a>
                             </td>

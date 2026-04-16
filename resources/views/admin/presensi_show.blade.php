@@ -172,7 +172,7 @@
                                             <x-table-td class="text-center">
                                                 @if ($editable)
                                                     <button onclick="openEditModal({{ $p->id }})"
-                                                        class="text-blue-600 hover:underline underline text-sm font-semibold">
+                                                        class="text-blue-600 hover:underline text-sm font-semibold">
                                                         Update
                                                     </button>
                                                 @else

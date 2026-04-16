@@ -130,11 +130,11 @@
                                     @if ($pengajuan->status === 'pending')
                                         <button type="button"
                                             x-on:click="$dispatch('open-modal', 'status-{{ $pengajuan->id }}')"
-                                            class="text-blue-600 hover:underline underline font-semibold">
+                                            class="text-blue-600 hover:underline text-sm font-semibold">
                                             Update
                                         </button>
                                     @else
-                                        <span class="text-gray-500">Update</span>
+                                        <span class="text-gray-500 text-sm">Update</span>
                                     @endif
                                 </div>
 
@@ -265,7 +265,7 @@
                                         @if ($pengajuan->status === 'pending')
                                             <button type="button"
                                                 x-on:click="$dispatch('open-modal', 'status-{{ $pengajuan->id }}')"
-                                                class="text-blue-600 hover:underline font-semibold">
+                                                class="text-blue-600 hover:underline text-sm font-semibold">
                                                 Update
                                             </button>
                                         @else
