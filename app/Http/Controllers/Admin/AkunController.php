@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class AkunController extends Controller
 {
@@ -90,8 +92,23 @@ class AkunController extends Controller
 
         /* UPLOAD FOTO */
         $fotoPath = null;
+
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('foto_users', 'public');
+
+            $file = $request->file('foto');
+
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read($file)
+                ->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->toJpeg(70);
+
+            $fotoPath = 'foto_users/' . uniqid() . '.jpg';
+
+            Storage::disk('public')->put($fotoPath, $image);
         }
 
         /* CREATE USER */
@@ -197,11 +214,27 @@ class AkunController extends Controller
         $validated = $request->validate($rules);
 
         if ($request->hasFile('foto')) {
-            if ($pengguna->foto) {
+
+            if ($pengguna->foto && Storage::disk('public')->exists($pengguna->foto)) {
                 Storage::disk('public')->delete($pengguna->foto);
             }
 
-            $pengguna->foto = $request->file('foto')->store('foto_users', 'public');
+            $file = $request->file('foto');
+
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read($file)
+                ->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->toJpeg(70);
+
+            $path = 'foto_users/' . uniqid() . '.jpg';
+
+            Storage::disk('public')->put($path, $image);
+
+            $pengguna->foto = $path;
         }
 
         $pengguna->update([

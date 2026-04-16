@@ -33,6 +33,8 @@ class Presensi extends Model
         'keterangan',
         'pengajuan_id',
         'updated_by',
+
+        'bukti',
     ];
 
     protected $casts = [

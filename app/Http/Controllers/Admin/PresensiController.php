@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PresensiController extends Controller
 {
@@ -56,6 +59,7 @@ class PresensiController extends Controller
 
         $rules = [
             'status' => 'required|in:hadir,alpha,izin,sakit',
+            'bukti'  => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ];
 
         if ($request->status === 'hadir') {
@@ -66,18 +70,55 @@ class PresensiController extends Controller
 
         if (in_array($request->status, ['izin', 'sakit'])) {
             $rules['keterangan'] = 'required';
+
+            // 🔴 WAJIB bukti kalau belum ada
+            if (!$presensi->bukti) {
+                $rules['bukti'] = 'required|file|mimes:jpg,jpeg,png,pdf|max:2048';
+            }
         }
 
         $validated = $request->validate($rules);
 
-        // Kalau alpha → kosongkan jam
+        // alpha → kosongkan jam
         if ($request->status === 'alpha') {
             $validated['jam_masuk'] = null;
             $validated['jam_keluar'] = null;
         }
 
-        // TAMBAHKAN INI
+        if ($request->hasFile('bukti')) {
+
+            if ($presensi->bukti && Storage::disk('public')->exists($presensi->bukti)) {
+                Storage::disk('public')->delete($presensi->bukti);
+            }
+
+            $file = $request->file('bukti');
+            $ext  = strtolower($file->getClientOriginalExtension());
+
+            if (in_array($ext, ['jpg', 'jpeg', 'png'])) {
+
+                $manager = new ImageManager(new Driver());
+
+                $image = $manager->read($file)
+                    ->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->toJpeg(70);
+
+                $path = 'bukti/presensi/' . uniqid() . '.jpg';
+
+                Storage::disk('public')->put($path, $image);
+            } else {
+                // PDF dll
+                $path = $file->store('bukti/presensi', 'public');
+            }
+
+            $validated['bukti'] = $path;
+        }
+
+        // simpan admin
         $validated['updated_by'] = Auth::id();
+
         $presensi->update($validated);
 
         $nama = optional($presensi->user)->name ?? 'User';
@@ -88,7 +129,6 @@ class PresensiController extends Controller
             'Presensi "' . $nama . '" pada tanggal ' . $tanggal . ' berhasil diperbarui'
         );
     }
-
     public function harian()
     {
         $today = \Carbon\Carbon::today();

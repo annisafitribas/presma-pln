@@ -42,6 +42,7 @@
                                         <x-table-th class="w-24 text-center">Sumber</x-table-th>
                                         <x-table-th class="w-28 text-center">Diubah</x-table-th>
                                         <x-table-th class="w-64">Catatan</x-table-th>
+                                        <x-table-th class="w-24 text-center">Bukti</x-table-th>
                                         <x-table-th class="w-16 text-center">Aksi</x-table-th>
                                     </tr>
                                 </thead>
@@ -165,6 +166,20 @@
                                                         <span class="text-gray-400">-</span>
                                                     @endif
 
+                                                </div>
+                                            </x-table-td>
+
+                                            <x-table-td align="center">
+                                                <div class="flex items-center justify-center gap-1">
+                                                    @if ($p->bukti)
+                                                        <a href="{{ asset('storage/' . $p->bukti) }}" target="_blank"
+                                                            class="flex items-center gap-1 text-[#123B6E] hover:underline">
+                                                            <x-heroicon-o-document-arrow-down class="w-4 h-4" />
+                                                            <span>File</span>
+                                                        </a>
+                                                    @else
+                                                        <span>-</span>
+                                                    @endif
                                                 </div>
                                             </x-table-td>
 
@@ -297,8 +312,10 @@
                                 </p>
                             </div>
 
+                            {{-- 🔴 BAGIAN INI SAJA YANG DIUBAH --}}
+
                             <form method="POST" action="{{ route('admin.presensi.update', $p->id) }}"
-                                x-data="{ status: '{{ old('status', $p->status) }}' }" class="space-y-4">
+                                enctype="multipart/form-data" x-data="{ status: '{{ old('status', $p->status) }}' }" class="space-y-4">
                                 @csrf
                                 @method('PATCH')
                                 <div>
@@ -337,8 +354,8 @@
                                 </div>
 
                                 <div x-show="status === 'izin' || status === 'sakit'"
-                                    class="text-yellow-700 text-xs rounded-lg">
-                                    Keterangan wajib diisi.
+                                    class="text-red-600 text-xs rounded-lg">
+                                    Keterangan wajib diisi & bukti wajib diupload.
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-3">
@@ -367,6 +384,26 @@
                                     <label class="text-sm text-gray-600">Keterangan</label>
                                     <textarea id="keterangan-{{ $p->id }}" name="keterangan" rows="3"
                                         class="w-full border rounded-xl p-2 mt-1">{{ old('keterangan', $p->keterangan) }}</textarea>
+                                </div>
+
+                                {{-- BUKTI --}}
+                                <div>
+                                    <label class="text-sm text-gray-600">Bukti</label>
+
+                                    <input type="file" name="bukti"
+                                        class="w-full border rounded-xl p-2 mt-1 text-sm">
+
+                                    {{-- preview file lama --}}
+                                    @if ($p->bukti)
+                                        <a href="{{ asset('storage/' . $p->bukti) }}" target="_blank"
+                                            class="text-xs text-[#123B6E] hover:underline mt-1 inline-block">
+                                            Lihat file saat ini
+                                        </a>
+                                    @endif
+
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        Format: JPG, PNG, PDF (maks 2MB)
+                                    </p>
                                 </div>
 
                                 <div class="flex justify-end gap-3 pt-4 border-t">

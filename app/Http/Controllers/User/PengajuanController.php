@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PengajuanController extends Controller
 {
@@ -57,8 +60,27 @@ class PengajuanController extends Controller
         }
 
         // UPLOAD FILE
-        $filePath = $request->file('bukti')
-            ->store('pengajuan_pdf', 'public');
+        $file = $request->file('bukti');
+        $ext  = strtolower($file->extension());
+
+        if (in_array($ext, ['jpg', 'jpeg', 'png'])) {
+
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read($file)
+                ->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->toJpeg(70);
+
+            $filePath = 'pengajuan/' . uniqid() . '.jpg';
+
+            Storage::disk('public')->put($filePath, $image);
+        } else {
+            // PDF tetap original
+            $filePath = $file->store('pengajuan', 'public');
+        }
 
         // SIMPAN
         Pengajuan::create([

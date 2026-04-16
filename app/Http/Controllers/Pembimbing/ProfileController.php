@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ProfileController extends Controller
 {
@@ -69,17 +71,29 @@ class ProfileController extends Controller
             'bagian_id' => ['required', 'exists:bagians,id'],
         ]);
 
-        /*
-        | UPLOAD FOTO
-        */
         if ($request->hasFile('foto')) {
 
-            if ($user->foto) {
+            // hapus foto lama
+            if ($user->foto && Storage::disk('public')->exists($user->foto)) {
                 Storage::disk('public')->delete($user->foto);
             }
 
-            $user->foto = $request->file('foto')
-                ->store('foto_pembimbing', 'public');
+            $file = $request->file('foto');
+
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read($file)
+                ->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->toJpeg(70);
+
+            $path = 'foto_users/' . uniqid() . '.jpg';
+
+            Storage::disk('public')->put($path, $image);
+
+            $user->foto = $path;
         }
 
         /*
