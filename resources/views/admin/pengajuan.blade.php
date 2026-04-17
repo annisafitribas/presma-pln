@@ -269,7 +269,7 @@
                                                 Update
                                             </button>
                                         @else
-                                            -
+                                            <span class="text-gray-500 text-sm">Update</span>
                                         @endif
                                     </x-table-td>
                                 </tr>

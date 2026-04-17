@@ -78,7 +78,7 @@ class DashboardController extends Controller
             'totalPembimbing',
             'totalAdmin',
             'totalPengguna',
-            'totalbidang'
+            'totalBidang'
         ));
     }
 }

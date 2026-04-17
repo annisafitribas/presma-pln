@@ -66,10 +66,10 @@
                         ' WITA'" />
 
                     {{-- JAM ISTIRAHAT --}}
-                    <x-show-item label="Jam Istirahat" :value="$konfigurasi?->mulai_istirahat && $konfigurasi?->selesai_istirahat
-                        ? \Carbon\Carbon::parse($konfigurasi->mulai_istirahat)->format('H:i') .
+                    <x-show-item label="Jam Istirahat" :value="$konfigurasi?->jamIstirahatMulaiCarbon() && $konfigurasi?->jamIstirahatSelesaiCarbon()
+                        ? $konfigurasi->jamIstirahatMulaiCarbon()->format('H:i') .
                             ' - ' .
-                            \Carbon\Carbon::parse($konfigurasi->selesai_istirahat)->format('H:i') .
+                            $konfigurasi->jamIstirahatSelesaiCarbon()->format('H:i') .
                             ' WITA'
                         : 'Tidak diatur'" />
 

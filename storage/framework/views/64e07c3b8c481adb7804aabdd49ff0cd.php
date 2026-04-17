@@ -2,8 +2,9 @@
 
 $__newAttributes = [];
 $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
-    'href' => '#',
-    'variant' => 'primary',
+    'type' => 'button',
+    'variant' => 'secondary',
+    'size' => 'md',
     'icon' => null,
     'class' => '',
 ]));
@@ -22,8 +23,9 @@ unset($__propNames);
 unset($__newAttributes);
 
 foreach (array_filter(([
-    'href' => '#',
-    'variant' => 'primary',
+    'type' => 'button',
+    'variant' => 'secondary',
+    'size' => 'md',
     'icon' => null,
     'class' => '',
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
@@ -39,20 +41,28 @@ foreach ($attributes->all() as $__key => $__value) {
 unset($__defined_vars, $__key, $__value); ?>
 
 <?php
-$baseClass = 'inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold transition duration-200 min-h-[40px]';
+$baseClass = 'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition duration-200 focus:outline-none';
 
 $variants = [
-    'primary'   => 'bg-[#123B6E] text-white hover:bg-[#0F325C]',
-    'secondary' => 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+    'primary'   => 'bg-[#0D1B2A] text-white hover:bg-[#324463]',
+    'secondary' => 'bg-gray-400 text-white hover:bg-gray-500',
     'danger'    => 'bg-red-600 text-white hover:bg-red-700',
+    'success'   => 'bg-green-600 text-white hover:bg-green-700',
 ];
 
-$variantClass = $variants[$variant] ?? $variants['primary'];
+$sizes = [
+    'sm' => 'px-3 py-1.5 text-sm min-h-[32px]',
+    'md' => 'px-4 py-2 text-sm min-h-[40px]',
+    'lg' => 'px-5 py-3 text-base min-h-[48px]',
+];
+
+$variantClass = $variants[$variant] ?? $variants['secondary'];
+$sizeClass = $sizes[$size] ?? $sizes['md'];
 ?>
 
-<a
-    href="<?php echo e($href); ?>"
-    <?php echo e($attributes->merge(['class' => "$baseClass $variantClass $class"])); ?>
+<button
+    type="<?php echo e($type); ?>"
+    <?php echo e($attributes->merge(['class' => "$baseClass $variantClass $sizeClass $class"])); ?>
 
 >
     <?php if($icon): ?>
@@ -65,7 +75,7 @@ $variantClass = $variants[$variant] ?? $variants['primary'];
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\DynamicComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'w-5 h-5']); ?>
+<?php $component->withAttributes(['class' => 'w-4 h-4']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal511d4862ff04963c3c16115c05a86a9d)): ?>
@@ -80,5 +90,4 @@ $variantClass = $variants[$variant] ?? $variants['primary'];
 
     <?php echo e($slot); ?>
 
-</a>
-<?php /**PATH C:\Users\Lenovo\Downloads\presma\resources\views/components/user-button-link.blade.php ENDPATH**/ ?>
+</button><?php /**PATH C:\Users\Lenovo\Downloads\presma\resources\views/components/button.blade.php ENDPATH**/ ?>

@@ -3,7 +3,7 @@
 <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
 <?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('heroicon-o-key'); ?>
+<?php $component->withName('heroicon-o-arrow-down-tray'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
@@ -22,4 +22,4 @@
 <?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
 <?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
 <?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
-<?php endif; ?><?php /**PATH C:\Users\Lenovo\Downloads\presma\storage\framework/views/6200ecea9ef05192275090c2813590a4.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH C:\Users\Lenovo\Downloads\presma\storage\framework/views/69ee86a03e71ddbb55fcc35452aae6d0.blade.php ENDPATH**/ ?>

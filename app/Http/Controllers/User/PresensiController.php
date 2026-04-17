@@ -45,11 +45,8 @@ class PresensiController extends Controller
             ->whereYear('tanggal', $tahunIni)
             ->where('status', 'alpha')
             ->exists();
-
         $bolehTidakHadirManual = !$sudahIzinBulanIni && !$sudahAlphaBulanIni;
-
         $bisaPresensiMasuk = !$presensiHariIni || is_null($presensiHariIni->jam_masuk);
-
         $telatHariIni = Telat::where('user_id', $user->id)
             ->whereDate('tanggal', today())
             ->whereIn('status', ['pending', 'approved'])
@@ -181,9 +178,6 @@ class PresensiController extends Controller
                 ->with('success', ucfirst($status) . ' berhasil disimpan');
         }
 
-        /*
-        CEK RADIUS (UNTUK MASUK & KELUAR)
-        */
         $request->validate([
             'latitude'  => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -191,7 +185,6 @@ class PresensiController extends Controller
 
         // MODE WFA jika radius null / 0
         $isWfa = !$konfigurasi->radius || $konfigurasi->radius == 0;
-
         if (!$isWfa) {
 
             $jarak = $this->hitungJarak(
@@ -206,11 +199,7 @@ class PresensiController extends Controller
             }
         }
 
-        /*
-        MASUK
-        */
         if ($request->type === 'masuk') {
-
             $presensi = Presensi::where('user_id', $user->id)
                 ->whereDate('tanggal', today())
                 ->first();
@@ -218,18 +207,12 @@ class PresensiController extends Controller
             if ($presensi && $presensi->jam_masuk) {
                 return back()->with('error', 'Kamu sudah absen masuk hari ini');
             }
-
             $jamSekarang = now();
-
             $jamMasukKantor = Carbon::today()
                 ->setTimeFromTimeString($konfigurasi->jam_masuk);
-
             $lateSeconds = $jamMasukKantor->diffInSeconds($jamSekarang, false);
-
             if ($lateSeconds > 0) {
-
                 $lateMinutes = ceil($lateSeconds / 60);
-
                 if (!$request->filled('alasan')) {
                     return back()
                         ->with('telat', true)
@@ -300,16 +283,11 @@ class PresensiController extends Controller
                 'status'       => 'hadir',
                 'is_late'      => false,
                 'late_minutes' => 0,
-
             ]);
-
             return redirect()->route('user.dashboard')
                 ->with('success', 'Presensi masuk berhasil');
         }
 
-        /*
-        KELUAR
-        */
         if ($request->type === 'keluar') {
 
             $presensi = Presensi::where('user_id', $user->id)
@@ -348,28 +326,23 @@ class PresensiController extends Controller
 
             $jamMasukUser  = Carbon::parse($presensi->jam_masuk);
             $jamKeluarUser = now();
-
             $workedSeconds = $jamMasukUser->diffInSeconds($jamKeluarUser);
 
             // Kurangi istirahat jika overlap
             if ($konfigurasi->mulai_istirahat && $konfigurasi->selesai_istirahat) {
-
-                $istirahatMulai   = Carbon::parse($konfigurasi->mulai_istirahat);
-                $istirahatSelesai = Carbon::parse($konfigurasi->selesai_istirahat);
-
-                if ($jamMasukUser < $istirahatSelesai && $jamKeluarUser > $istirahatMulai) {
-
-                    $overlapStart = max($jamMasukUser, $istirahatMulai);
-                    $overlapEnd   = min($jamKeluarUser, $istirahatSelesai);
-
-                    $workedSeconds -= $overlapStart->diffInSeconds($overlapEnd);
+                $istirahatMulai   = $konfigurasi->jamIstirahatMulaiCarbon();
+                $istirahatSelesai = $konfigurasi->jamIstirahatSelesaiCarbon();
+                if ($istirahatMulai && $istirahatSelesai) {
+                    if ($jamMasukUser < $istirahatSelesai && $jamKeluarUser > $istirahatMulai) {
+                        $overlapStart = max($jamMasukUser, $istirahatMulai);
+                        $overlapEnd   = min($jamKeluarUser, $istirahatSelesai);
+                        $workedSeconds -= $overlapStart->diffInSeconds($overlapEnd);
+                    }
                 }
             }
 
             $halfWork = $konfigurasi->setengahKerjaDetik();
-
             if ($workedSeconds < $halfWork) {
-
                 $presensi->update([
                     'jam_keluar' => $jamKeluarUser->format('H:i:s'),
                     'lat_keluar' => $request->latitude,
@@ -402,12 +375,10 @@ class PresensiController extends Controller
         $R = 6371000;
         $dLat = deg2rad($lat2 - $lat1);
         $dLon = deg2rad($lon2 - $lon1);
-
         $a = sin($dLat / 2) ** 2 +
             cos(deg2rad($lat1)) *
             cos(deg2rad($lat2)) *
             sin($dLon / 2) ** 2;
-
         return $R * (2 * atan2(sqrt($a), sqrt(1 - $a)));
     }
 }

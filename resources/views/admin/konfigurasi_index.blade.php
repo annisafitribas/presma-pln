@@ -71,8 +71,11 @@
                                 ? $konfigurasi->jam_masuk . ' – ' . $konfigurasi->jam_keluar
                                 : '-'" />
 
-                            <x-info label="Jam Istirahat" :value="$konfigurasi->mulai_istirahat && $konfigurasi->selesai_istirahat
-                                ? $konfigurasi->mulai_istirahat . ' – ' . $konfigurasi->selesai_istirahat
+                            <x-info label="Jam Istirahat" :value="$konfigurasi->jamIstirahatMulaiCarbon() &&
+                            $konfigurasi->jamIstirahatSelesaiCarbon()
+                                ? $konfigurasi->jamIstirahatMulaiCarbon()->format('H:i') .
+                                    ' – ' .
+                                    $konfigurasi->jamIstirahatSelesaiCarbon()->format('H:i')
                                 : '-'" />
                         </div>
                     </x-card>

@@ -71,6 +71,12 @@ class Konfigurasi extends Model
 
     public function jamIstirahatMulaiCarbon(): ?Carbon
     {
+        $today = now()->dayOfWeekIso; // 5 = Jumat
+
+        if ($today == 5) {
+            return Carbon::today()->setTimeFromTimeString('11:30:00');
+        }
+
         return $this->mulai_istirahat
             ? Carbon::today()->setTimeFromTimeString($this->mulai_istirahat)
             : null;
@@ -78,11 +84,17 @@ class Konfigurasi extends Model
 
     public function jamIstirahatSelesaiCarbon(): ?Carbon
     {
+        $today = now()->dayOfWeekIso;
+
+        if ($today == 5) {
+            return Carbon::today()->setTimeFromTimeString('12:30:00');
+        }
+
         return $this->selesai_istirahat
             ? Carbon::today()->setTimeFromTimeString($this->selesai_istirahat)
             : null;
     }
-
+    
     public function isTelat($waktu = null): bool
     {
         $waktu = $waktu ? Carbon::parse($waktu) : now();
