@@ -145,7 +145,7 @@ return [
         'hari_kerja' => 'Hari Kerja',
         'jam_masuk' => 'Jam Masuk',
         'jam_keluar' => 'Jam Keluar',
-        '_telat' => 'Jam  Telat',
+        'telat' => 'Jam  Telat',
         'mulai_istirahat' => 'Jam Istirahat Mulai',
         'selesai_istirahat' => 'Jam Istirahat Selesai',
         'kantor_lat' => 'Latitude',

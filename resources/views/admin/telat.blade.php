@@ -98,9 +98,9 @@
                         <thead>
                             <tr>
                                 <x-table-th align="center" class="w-14">No</x-table-th>
-                                <x-table-th>Nama</x-table-th> {{-- default left --}}
+                                <x-table-th class="w-60">Nama</x-table-th> {{-- default left --}}
                                 <x-table-th>Tanggal</x-table-th> {{-- default left --}}
-                                <x-table-th align="left">Alasan</x-table-th>
+                                <x-table-th align="left" class="w-60">Alasan</x-table-th>
                                 <x-table-th align="center">Bukti</x-table-th>
                                 <x-table-th align="center">Jam Masuk</x-table-th>
                                 <x-table-th align="center">Status</x-table-th>
