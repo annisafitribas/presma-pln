@@ -35,12 +35,13 @@ class PresensiController extends Controller
 
             $rekap = Presensi::where('user_id', $user->id)
                 ->selectRaw("
-            SUM(status = 'hadir') as hadir,
-            SUM(status = 'telat') as telat,
-            SUM(status = 'sakit') as sakit,
-            SUM(status = 'izin') as izin,
-            SUM(status = 'alpha') as alpha
-        ")
+                    SUM(status = 'hadir') as hadir,
+                    SUM(status = 'telat') as telat,
+                    SUM(status = 'sakit') as sakit,
+                    SUM(status = 'izin') as izin,
+                    SUM(status = 'alpha') as alpha,
+                    SUM(status = 'pending') as pending
+                ")
                 ->first();
 
             $user->total_hadir = $rekap->hadir ?? 0;
@@ -48,6 +49,7 @@ class PresensiController extends Controller
             $user->total_sakit = $rekap->sakit ?? 0;
             $user->total_izin  = $rekap->izin ?? 0;
             $user->total_alpha = $rekap->alpha ?? 0;
+            $user->total_pending = $rekap->pending ?? 0;
 
             return $user;
         });
@@ -85,11 +87,6 @@ class PresensiController extends Controller
 
         if (in_array($request->status, ['izin', 'sakit'])) {
             $rules['keterangan'] = 'required';
-
-            // 🔴 WAJIB bukti kalau belum ada
-            if (!$presensi->bukti) {
-                $rules['bukti'] = 'required|file|mimes:jpg,jpeg,png,pdf|max:2048';
-            }
         }
 
         $validated = $request->validate($rules);

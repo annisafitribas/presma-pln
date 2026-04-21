@@ -31,11 +31,12 @@
                                     <tr>
                                         <x-table-th align="center" class="w-12 whitespace-nowrap">No</x-table-th>
                                         <x-table-th>Nama</x-table-th>
-                                        <x-table-th align="center">Hadir</x-table-th>
-                                        <x-table-th align="center">Telat</x-table-th>
-                                        <x-table-th align="center">Sakit</x-table-th>
-                                        <x-table-th align="center">Izin</x-table-th>
-                                        <x-table-th align="center">Alpha</x-table-th>
+                                        <x-table-th align="center" class="w-28">Hadir</x-table-th>
+                                        <x-table-th align="center" class="w-28">Telat</x-table-th>
+                                        <x-table-th align="center" class="w-28">Sakit</x-table-th>
+                                        <x-table-th align="center" class="w-28">Izin</x-table-th>
+                                        <x-table-th align="center" class="w-28">Alpha</x-table-th>
+                                        <x-table-th align="center" class="w-28">Pending</x-table-th>
                                         <x-table-th align="center">Aksi</x-table-th>
                                     </tr>
                                 </thead>
@@ -77,6 +78,7 @@
                                             <x-table-td align="center">{{ $user->total_sakit }}</x-table-td>
                                             <x-table-td align="center">{{ $user->total_izin }}</x-table-td>
                                             <x-table-td align="center">{{ $user->total_alpha }}</x-table-td>
+                                            <x-table-td align="center">{{ $user->total_pending }}</x-table-td>
 
                                             <x-table-td align="center">
                                                 <a href="{{ route('admin.presensi.show', $user->id) }}"
@@ -138,7 +140,7 @@
                             </div>
 
                             {{-- STAT GRID --}}
-                            <div class="grid grid-cols-5 text-center border-t border-gray-200 pt-3">
+                            <div class="grid grid-cols-6 text-center border-t border-gray-200 pt-3">
 
                                 <div>
                                     <p class="text-gray-400 text-[11px]">Hadir</p>
@@ -175,6 +177,12 @@
                                     </p>
                                 </div>
 
+                                <div>
+                                    <p class="text-gray-400 text-[11px]">Pending</p>
+                                    <p class="font-semibold text-yellow-600">
+                                        {{ $user->total_pending }}
+                                    </p>
+                                </div>
                             </div>
 
                         </div>

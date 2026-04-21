@@ -100,9 +100,9 @@
                                 <x-table-th align="center" class="w-14">No</x-table-th>
                                 <x-table-th class="w-60">Nama</x-table-th> {{-- default left --}}
                                 <x-table-th>Tanggal</x-table-th> {{-- default left --}}
+                                <x-table-th align="center">Jam Masuk</x-table-th>
                                 <x-table-th align="left" class="w-60">Alasan</x-table-th>
                                 <x-table-th align="center">Bukti</x-table-th>
-                                <x-table-th align="center">Jam Masuk</x-table-th>
                                 <x-table-th align="center">Status</x-table-th>
                                 <x-table-th align="center">Aksi</x-table-th>
                             </tr>
@@ -135,6 +135,11 @@
                                         {{ $telat->tanggal->format('d M Y') }}
                                     </x-table-td>
 
+                                    {{-- JAM --}}
+                                    <x-table-td align="center">
+                                        {{ $telat->jam_masuk }}
+                                    </x-table-td>
+
                                     {{-- ALASAN --}}
                                     <x-table-td align="left" class="break-words">
                                         {{ $telat->alasan }}
@@ -152,11 +157,6 @@
                                                 <span>-</span>
                                             @endif
                                         </div>
-                                    </x-table-td>
-
-                                    {{-- JAM --}}
-                                    <x-table-td align="center">
-                                        {{ $telat->jam_masuk }}
                                     </x-table-td>
 
                                     {{-- STATUS --}}

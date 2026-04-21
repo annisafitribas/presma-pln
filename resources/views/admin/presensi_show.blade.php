@@ -381,12 +381,6 @@
                                     </div>
 
                                 </div>
-                                {{-- KETERANGAN --}}
-                                <div>
-                                    <label class="text-sm text-gray-600">Keterangan</label>
-                                    <textarea id="keterangan-{{ $p->id }}" name="keterangan" rows="3"
-                                        class="w-full border rounded-xl p-2 mt-1">{{ old('keterangan', $p->keterangan) }}</textarea>
-                                </div>
 
                                 {{-- BUKTI --}}
                                 <div>
@@ -408,6 +402,13 @@
                                     </p>
                                 </div>
 
+                                   {{-- KETERANGAN --}}
+                                <div>
+                                    <label class="text-sm text-gray-600">Keterangan</label>
+                                    <textarea id="keterangan-{{ $p->id }}" name="keterangan" rows="3"
+                                        class="w-full border rounded-xl p-2 mt-1">{{ old('keterangan', $p->keterangan) }}</textarea>
+                                </div>
+                                 
                                 <div class="flex justify-end gap-3 pt-4 border-t">
                                     <button type="button" onclick="closeEditModal({{ $p->id }})"
                                         class="px-4 py-2 bg-gray-200 rounded-xl text-sm">

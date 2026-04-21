@@ -51,6 +51,7 @@ class TelatController extends Controller
         $request->validate([
             'status'        => 'required|in:approved,rejected',
             'catatan_admin' => 'required|string|max:500',
+            'bukti' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         if ($telat->status !== 'pending') {
@@ -85,10 +86,6 @@ class TelatController extends Controller
             } else {
                 $path = $file->store('bukti/telat', 'public');
             }
-        }
-
-        if ($request->status === 'approved' && !$path) {
-            return back()->with('error', '⚠️ Tidak bisa menyetujui tanpa bukti.');
         }
 
         DB::beginTransaction();
